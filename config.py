@@ -94,92 +94,62 @@ data_arg.add_argument("--use_sp", type=str2bool, default=False, help=""
     "if this is set to true, we expect lift to be dumped already for all images.")
 
 obj_arg = add_argument_group("obj")
-obj_arg.add_argument("--obj_num_kp", type=int, default=2000, help=""
-    "number of keypoints per image")
+obj_arg.add_argument("--obj_num_kp", type=int, default=2000, help="number of keypoints per image")
 obj_arg.add_argument("--obj_top_k", type=int, default=-1, help=""
     "number of keypoints above the threshold to use for "
     "essential matrix estimation. put -1 to use all. ")
-obj_arg.add_argument("--obj_num_nn", type=int, default=1, help=""
-    "number of nearest neighbors in terms of descriptor "
+obj_arg.add_argument("--obj_num_nn", type=int, default=1, help="number of nearest neighbors in terms of descriptor "
     "distance that are considered when generating the "
     "distance matrix")
 obj_arg.add_argument("--obj_geod_type", type=str, default="episym",
-    choices=["sampson", "episqr", "episym"], help=""
-    "type of geodesic distance")
+    choices=["sampson", "episqr", "episym"], help="type of geodesic distance")
 obj_arg.add_argument("--obj_geod_th", type=float, default=1e-4, help=""
     "theshold for the good geodesic distance")
 
 loss_arg = add_argument_group("loss")
-loss_arg.add_argument(
-    "--loss_decay", type=float, default=0.0, help=""
+loss_arg.add_argument("--loss_decay", type=float, default=0.0, help=""
     "l2 decay")
-loss_arg.add_argument(
-    "--loss_EM", type=float, default=0.0, help=""
+loss_arg.add_argument("--loss_EM", type=float, default=0.0, help=""
     "Use EM loss")
-loss_arg.add_argument(
-    "--loss_gaussian", type=float, default=0.0, help=""
+loss_arg.add_argument("--loss_gaussian", type=float, default=0.0, help=""
     "Use EM loss")
-loss_arg.add_argument(
-    "--loss_classif", type=float, default=1.0, help=""
+loss_arg.add_argument("--loss_classif", type=float, default=1.0, help=""
     "weight of the classification loss")
-loss_arg.add_argument(
-    "--loss_essential", type=float, default=0.1, help=""
+loss_arg.add_argument("--loss_essential", type=float, default=0.1, help=""
     "weight of the essential loss")
-loss_arg.add_argument(
-    "--loss_essential_init_iter", type=int, default=20000, help=""
+loss_arg.add_argument("--loss_essential_init_iter", type=int, default=20000, help=""
     "initial iterations to run only the classification loss")
 
 train_arg = add_argument_group("Train")
-train_arg.add_argument(
-    "--run_mode", type=str, default="train", help=""
+train_arg.add_argument("--run_mode", type=str, default="train", help=""
     "run_mode")
-train_arg.add_argument(
-    "--train_batch_size", type=int, default=32, help=""
+train_arg.add_argument("--train_batch_size", type=int, default=32, help=""
     "batch size")
-train_arg.add_argument(
-    "--train_max_tr_sample", type=int, default=10000, help=""
+train_arg.add_argument("--train_max_tr_sample", type=int, default=10000, help=""
     "number of max training samples")
-train_arg.add_argument(
-    "--train_max_va_sample", type=int, default=1000, help=""
+train_arg.add_argument("--train_max_va_sample", type=int, default=1000, help=""
     "number of max validation samples")
-train_arg.add_argument(
-    "--train_max_te_sample", type=int, default=1000, help=""
+train_arg.add_argument("--train_max_te_sample", type=int, default=1000, help=""
     "number of max test samples")
-train_arg.add_argument(
-    "--train_lr", type=float, default=1e-3, help=""
+train_arg.add_argument("--train_lr", type=float, default=1e-3, help=""
     "learning rate")
-train_arg.add_argument(
-    "--train_iter", type=int, default=500000, help=""
+train_arg.add_argument("--train_iter", type=int, default=500000, help=""
     "training iterations to perform")
-train_arg.add_argument(
-    "--res_dir", type=str, default="./logs", help=""
+train_arg.add_argument("--res_dir", type=str, default="./logs", help=""
     "base directory for results")
-train_arg.add_argument(
-    "--log_dir", type=str, default="", help=""
+train_arg.add_argument("--log_dir", type=str, default="", help=""
     "save directory name inside results")
-train_arg.add_argument(
-    "--test_log_dir", type=str, default="", help=""
+train_arg.add_argument("--test_log_dir", type=str, default="", help=""
     "which directory to test inside results")
-train_arg.add_argument(
-    "--val_intv", type=int, default=5000, help=""
+train_arg.add_argument("--val_intv", type=int, default=5000, help=""
     "validation interval")
-train_arg.add_argument(
-    "--report_intv", type=int, default=1000, help=""
+train_arg.add_argument("--report_intv", type=int, default=1000, help=""
     "summary interval")
 
 vis_arg = add_argument_group('Visualization')
-vis_arg.add_argument(
-    "--vis_dump", type=str2bool, default=False, help=""
-    "turn this on to dump data for visualization"
-)
-vis_arg.add_argument(
-    "--tqdm_width", type=int, default=79, help=""
-    "width of the tqdm bar"
-)
-vis_arg.add_argument(
-    "--vis_dir", type=str, default="", help=""
-    "vis is not none, then dump mask_before into vis_dir"
-)
+vis_arg.add_argument("--vis_dump", type=str2bool, default=False, help="turn this on to dump data for visualization")
+vis_arg.add_argument("--tqdm_width", type=int, default=79, help="width of the tqdm bar")
+vis_arg.add_argument("--vis_dir", type=str, default="", help="vis is not none, then dump mask_before into vis_dir")
 
 def setup_dataset(dataset_name):
     """Expands dataset name and directories properly"""
@@ -412,8 +382,7 @@ def get_config():
     config, unparsed = parser.parse_known_args()
     # Setup the dataset related things
     for _mode in ["tr", "va", "te"]:
-        data_dir, geom_type, vis_th = setup_dataset(
-            getattr(config, "data_" + _mode))
+        data_dir, geom_type, vis_th = setup_dataset(getattr(config, "data_" + _mode))
         setattr(config, "data_dir_" + _mode, data_dir)
         setattr(config, "data_geom_type_" + _mode, geom_type)
         setattr(config, "data_vis_th_" + _mode, vis_th)
