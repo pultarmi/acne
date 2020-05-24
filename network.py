@@ -516,10 +516,7 @@ class MyNetwork(object):
                     with open(self.va_res_file, "w") as ofp:
                         ofp.write("{:e}\n".format(best_va_res))
                     # Save best model
-                    self.saver_best.save(
-                        self.sess, self.save_file_best,
-                        write_meta_graph=False,
-                    )
+                    self.saver_best.save(self.sess, self.save_file_best, write_meta_graph=False)
                 if va_res_ours_ransac > best_va_res_ours_ransac:
                     print(
                         "Saving best model with va_res_ours_ransac = {}".format(
@@ -529,10 +526,7 @@ class MyNetwork(object):
                     with open(self.va_res_file_ours_ransac, "w") as ofp:
                         ofp.write("{:e}\n".format(best_va_res_ours_ransac))
                     # Save best model
-                    self.saver_best.save(
-                        self.sess, self.save_file_best_ours_ransac,
-                        write_meta_graph=False,
-                    )
+                    self.saver_best.save(self.sess, self.save_file_best_ours_ransac,write_meta_graph=False)
 
     def test(self, data):
         """Test routine"""

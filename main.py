@@ -22,10 +22,8 @@ def main(config):
         data = {}
         data["train"] = load_data(config, "train")
         data["valid"] = load_data(config, "valid")
-
         mynet = MyNetwork(config)
         mynet.train(data)
-
     elif config.run_mode == "test":
         # Load validation and test data. Note that we also load validation to
         # visualize more than what we did for training. For training we choose
@@ -33,10 +31,7 @@ def main(config):
         data = {}
         # data["valid"] = load_data(config, "valid")
         data["test"] = load_data(config, "test")
-        # Initialize network
         mynet = MyNetwork(config)
-
-        # Run testing
         mynet.test(data)
 
 

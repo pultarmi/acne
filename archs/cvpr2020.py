@@ -123,7 +123,3 @@ def build_graph(x_in, is_training, config, weight=None):
     print(cur_input.shape)
 
     return logits, vis_dict
-
-
-#
-# cvpr2018.py ends here
