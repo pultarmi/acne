@@ -16,14 +16,10 @@ from tests import test_process
 
 class MyNetwork(object):
     """Network class """
-
     def __init__(self, config):
-
         self.config = config
-
         # Initialize thenosrflow session
         self._init_tensorflow()
-
         # Build the network
         self._build_placeholder()
         self._build_preprocessing()
@@ -50,12 +46,10 @@ class MyNetwork(object):
             tfconfig = tf.ConfigProto()
 
         tfconfig.gpu_options.allow_growth = True
-
         self.sess = tf.Session(config=tfconfig)
 
     def _build_placeholder(self):
         """Build placeholders."""
-
         # Make tensforflow placeholder
         self.x_in = tf.placeholder(tf.float32, [None, 1, None, 4], name="x_in")
         self.y_in = tf.placeholder(tf.float32, [None, None, 2], name="y_in")
@@ -77,13 +71,11 @@ class MyNetwork(object):
 
     def _build_preprocessing(self):
         """Build preprocessing related graph."""
-
         # For now, do nothing
         pass
 
     def _build_model(self):
         """Build our MLP network."""
-
         with tf.variable_scope("Matchnet", reuse=tf.AUTO_REUSE):
             # For intermediate visualization 
             self.fetch_vis = {}
@@ -196,7 +188,6 @@ class MyNetwork(object):
     
     def _build_loss(self, e_hat, logit, x_in, y_in, weights, name=""):
         """Build our cross entropy loss."""
-
         with tf.variable_scope("Loss_{}".format(name), reuse=tf.AUTO_REUSE):
             x_shp = tf.shape(self.x_in)
             # The groundtruth epi sqr
@@ -224,12 +215,8 @@ class MyNetwork(object):
             tf.summary.scalar("essential_loss", essential_loss)
 
             # Classification loss
-            is_pos = tf.to_float(
-                gt_geod_d < self.config.obj_geod_th
-            )
-            is_neg = tf.to_float(
-                gt_geod_d >= self.config.obj_geod_th
-            )
+            is_pos = tf.to_float(gt_geod_d < self.config.obj_geod_th)
+            is_neg = tf.to_float(gt_geod_d >= self.config.obj_geod_th)
             c = is_pos - is_neg
 
             classif_losses = -tf.log(tf.nn.sigmoid(c * logit))
@@ -237,12 +224,8 @@ class MyNetwork(object):
             # balance
             num_pos = tf.nn.relu(tf.reduce_sum(is_pos, axis=1) - 1.0) + 1.0
             num_neg = tf.nn.relu(tf.reduce_sum(is_neg, axis=1) - 1.0) + 1.0
-            classif_loss_p = tf.reduce_sum(
-                classif_losses * is_pos, axis=1
-            )
-            classif_loss_n = tf.reduce_sum(
-                classif_losses * is_neg, axis=1
-            )
+            classif_loss_p = tf.reduce_sum(classif_losses * is_pos, axis=1)
+            classif_loss_n = tf.reduce_sum(classif_losses * is_neg, axis=1)
 
 
             classif_loss = tf.reduce_mean(
@@ -295,12 +278,8 @@ class MyNetwork(object):
                     classif_losses = -tf.log_sigmoid(c * logit_i)
                     num_pos = tf.nn.relu(tf.reduce_sum(is_pos, axis=1) - 1.0) + 1.0
                     num_neg = tf.nn.relu(tf.reduce_sum(is_neg, axis=1) - 1.0) + 1.0
-                    classif_loss_p = tf.reduce_sum(
-                        classif_losses * is_pos, axis=1
-                    )
-                    classif_loss_n = tf.reduce_sum(
-                        classif_losses * is_neg, axis=1
-                    )
+                    classif_loss_p = tf.reduce_sum(classif_losses * is_pos, axis=1)
+                    classif_loss_n = tf.reduce_sum(classif_losses * is_neg, axis=1)
                     classif_loss = tf.reduce_mean(
                         classif_loss_p * 0.5 / num_pos +
                         classif_loss_n * 0.5 / num_neg
@@ -311,11 +290,10 @@ class MyNetwork(object):
 
             tf.summary.scalar("loss", loss)
             return loss
-            
+
 
     def _build_optim(self):
         """Build optimizer related ops and vars."""
-
         with tf.variable_scope("Optimization", reuse=tf.AUTO_REUSE):
             learning_rate = self.config.train_lr
             max_grad_norm = None
@@ -329,8 +307,7 @@ class MyNetwork(object):
                     new_grads_and_vars = []
                     for idx, (grad, var) in enumerate(grads_and_vars):
                         if grad is not None:
-                            new_grads_and_vars.append((
-                                tf.clip_by_norm(grad, max_grad_norm), var))
+                            new_grads_and_vars.append((tf.clip_by_norm(grad, max_grad_norm), var))
                     grads_and_vars = new_grads_and_vars
 
                 # Check numerics and report if something is going on. This
@@ -354,13 +331,11 @@ class MyNetwork(object):
 
     def _build_summary(self):
         """Build summary ops."""
-
         # Merge all summary op
         self.summary_op = tf.summary.merge_all()
 
     def _build_writer(self):
         """Build the writers and savers"""
-
         # Create suffix automatically if not provided
         suffix_tr = self.config.log_dir
         if suffix_tr == "":
@@ -368,7 +343,6 @@ class MyNetwork(object):
         suffix_te = self.config.test_log_dir
         if suffix_te == "":
             suffix_te = suffix_tr
-
         # Directories for train/test
         self.res_dir_tr = os.path.join(self.config.res_dir, suffix_tr)
         self.res_dir_va = os.path.join(self.config.res_dir, suffix_te)
@@ -376,26 +350,20 @@ class MyNetwork(object):
 
         # Create summary writers
         if self.config.run_mode == "train":
-            self.summary_tr = tf.summary.FileWriter(
-                os.path.join(self.res_dir_tr, "train", "logs"))
+            self.summary_tr = tf.summary.FileWriter(os.path.join(self.res_dir_tr, "train", "logs"))
         if self.config.run_mode != "comp":
-            self.summary_va = tf.summary.FileWriter(
-                os.path.join(self.res_dir_va, "valid", "logs"))
+            self.summary_va = tf.summary.FileWriter(os.path.join(self.res_dir_va, "valid", "logs"))
         if self.config.run_mode == "test":
-            self.summary_te = tf.summary.FileWriter(
-                os.path.join(self.res_dir_te, "test", "logs"))
+            self.summary_te = tf.summary.FileWriter(os.path.join(self.res_dir_te, "test", "logs"))
 
         # Create savers (one for current, one for best)
         self.saver_cur = tf.train.Saver()
         self.saver_best = tf.train.Saver()
         # Save file for the current model
-        self.save_file_cur = os.path.join(
-            self.res_dir_tr, "model")
+        self.save_file_cur = os.path.join(self.res_dir_tr, "model")
         # Save file for the best model
-        self.save_file_best = os.path.join(
-            self.res_dir_tr, "models-best")
-        self.save_file_best_ours_ransac = os.path.join(
-            self.res_dir_tr, "models-best-ours-ransac")
+        self.save_file_best = os.path.join(self.res_dir_tr, "models-best")
+        self.save_file_best_ours_ransac = os.path.join(self.res_dir_tr, "models-best-ours-ransac")
 
         # Other savers
         self.va_res_file = os.path.join(self.res_dir_va, "valid", "va_res.txt")
@@ -403,60 +371,45 @@ class MyNetwork(object):
 
     def train(self, data):
         """Training function.
-
         Parameters
         ----------
         data_tr : tuple
             Training data.
-
         data_va : tuple
             Validation data.
-
         x_va : ndarray
             Validation data.
-
         y_va : ndarray
-            Validation labels.
-
-        """
+            Validation labels."""
 
         print("Initializing...")
         self.sess.run(tf.global_variables_initializer())
-        
         # ----------------------------------------
         # Resume data if it already exists
-        latest_checkpoint = tf.train.latest_checkpoint(
-            self.res_dir_tr)
+        latest_checkpoint = tf.train.latest_checkpoint(self.res_dir_tr)
         b_resume = latest_checkpoint is not None
-        if b_resume:
-            # Restore network
+        if b_resume: # Restore network
             print("Restoring from {}...".format(
                 self.res_dir_tr))
-            self.saver_cur.restore(
-                self.sess,
-                latest_checkpoint
-            )
+            self.saver_cur.restore( self.sess, latest_checkpoint )
             # restore number of steps so far
             step = self.sess.run(self.global_step)
             # restore best validation result
             if os.path.exists(self.va_res_file):
                 with open(self.va_res_file, "r") as ifp:
                     dump_res = ifp.read()
-                dump_res = parse(
-                    "{best_va_res:e}\n", dump_res)
+                dump_res = parse("{best_va_res:e}\n", dump_res)
                 best_va_res = dump_res["best_va_res"]
             if os.path.exists(self.va_res_file_ours_ransac):
                 with open(self.va_res_file_ours_ransac, "r") as ifp:
                     dump_res = ifp.read()
-                dump_res = parse(
-                    "{best_va_res:e}\n", dump_res)
+                dump_res = parse("{best_va_res:e}\n", dump_res)
                 best_va_res_ours_ransac = dump_res["best_va_res"]
         else:
             print("Starting from scratch...")
             step = 0
             best_va_res = -1
             best_va_res_ours_ransac = -1
-
         # ----------------------------------------
         if self.config.data_name.startswith("oan"):
             data_loader = iter(data["train"])
@@ -470,16 +423,12 @@ class MyNetwork(object):
             T2s_tr = data["train"]["T2s"]
             K1s_tr = data["train"]["K1s"]
             K2s_tr = data["train"]["K2s"]
-
-        # ----------------------------------------
         # The training loop
         batch_size = self.config.train_batch_size
         max_iter = self.config.train_iter
         
         for step in trange(step, max_iter, ncols=self.config.tqdm_width):
-            # ----------------------------------------
             # Batch construction
-
             # Get a random training batch
             if self.config.data_name.startswith("oan"):
                 try:
@@ -497,37 +446,21 @@ class MyNetwork(object):
                 K1s_b = data_dict["K1s"]
                 K2s_b = data_dict["K2s"]
             else:
-                ind_cur = np.random.choice(
-                    len(xs_tr), batch_size, replace=False)
+                ind_cur = np.random.choice(len(xs_tr), batch_size, replace=False)
                 # Use minimum kp in batch to construct the batch
                 numkps = np.array([xs_tr[_i].shape[1] for _i in ind_cur])
                 cur_num_kp = numkps.min()
                 # Actual construction of the batch
-                xs_b = np.array(
-                    [xs_tr[_i][:, :cur_num_kp, :] for _i in ind_cur]
-                ).reshape(batch_size, 1, cur_num_kp, 4)
-                ys_b = np.array(
-                    [ys_tr[_i][:cur_num_kp, :] for _i in ind_cur]
-                ).reshape(batch_size, cur_num_kp, 2)
-                Rs_b = np.array(
-                    [Rs_tr[_i] for _i in ind_cur]
-                ).reshape(batch_size, 9)
-                ts_b = np.array(
-                    [ts_tr[_i] for _i in ind_cur]
-                ).reshape(batch_size, 3)
+                xs_b = np.array([xs_tr[_i][:, :cur_num_kp, :] for _i in ind_cur]).reshape(batch_size, 1, cur_num_kp, 4)
+                ys_b = np.array([ys_tr[_i][:cur_num_kp, :] for _i in ind_cur]).reshape(batch_size, cur_num_kp, 2)
+                Rs_b = np.array([Rs_tr[_i] for _i in ind_cur]).reshape(batch_size, 9)
+                ts_b = np.array([ts_tr[_i] for _i in ind_cur]).reshape(batch_size, 3)
                 if self.config.use_fundamental > 0:
-                    T1s_b = np.array(
-                        [T1s_tr[_i] for _i in ind_cur])
-                    T2s_b = np.array(
-                        [T2s_tr[_i] for _i in ind_cur])
-                    K1s_b = np.array(
-                        [K1s_tr[_i] for _i in ind_cur])
-                    K2s_b = np.array(
-                        [K2s_tr[_i] for _i in ind_cur])
-            # ----------------------------------------
+                    T1s_b = np.array([T1s_tr[_i] for _i in ind_cur])
+                    T2s_b = np.array([T2s_tr[_i] for _i in ind_cur])
+                    K1s_b = np.array([K1s_tr[_i] for _i in ind_cur])
+                    K2s_b = np.array([K2s_tr[_i] for _i in ind_cur])
             # Train
-
-            # Feed Dict
             feed_dict = {
                 self.x_in: xs_b,
                 self.y_in: ys_b,
@@ -535,14 +468,12 @@ class MyNetwork(object):
                 self.t_in: ts_b,
                 self.is_training: True,
             }
-
             # add use_fundamental
             if self.config.use_fundamental > 0:
                 feed_dict[self.T1_in] = T1s_b
                 feed_dict[self.T2_in] = T2s_b
                 feed_dict[self.K1_in] = K1s_b
                 feed_dict[self.K2_in] = K2s_b
-
             # Fetch
             fetch = {
                 "optim": self.optim,
@@ -572,8 +503,6 @@ class MyNetwork(object):
                     self.sess, self.save_file_cur,
                     global_step=self.global_step,
                     write_meta_graph=False)
-
-            # ----------------------------------------
             # Validation
             if b_validate:
                 va_res = 0
@@ -629,16 +558,12 @@ class MyNetwork(object):
 
         # Check if model exists
         if not os.path.exists(self.save_file_best + ".index"):
-            print("Model File {} does not exist! Quiting".format(
-                self.save_file_best))
+            print("Model File {} does not exist! Quiting".format(self.save_file_best))
             exit(1)
 
         # Restore model
-        print("Restoring from {}...".format(
-            self.save_file_best))
-        self.saver_best.restore(
-            self.sess,
-            self.save_file_best)
+        print("Restoring from {}...".format(self.save_file_best))
+        self.saver_best.restore(self.sess, self.save_file_best)
         # Run Test
         cur_global_step = 0 # dummy
         test_mode_list = ["test"] # Only evaluate on test set
@@ -665,6 +590,3 @@ class MyNetwork(object):
                 self.last_e_hat, score, self.last_x_in,
                 data[test_mode],
                 getattr(self, "res_dir_" + test_mode[:2]), self.config)
-
-#
-# network.py ends here
