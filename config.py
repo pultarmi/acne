@@ -69,7 +69,6 @@ neigh_arg.add_argument("--var_mode", type=str, default="division", help=""
 neigh_arg.add_argument("--mean_mode", type=str, default="1", help=""
     "calculate the mean value for the gcn layer")
 
-# Network
 net_arg = add_argument_group("Network")
 net_arg.add_argument("--net_depth", type=int, default=12, help="number of layers")
 net_arg.add_argument("--net_nchannel", type=int, default=128, help="number of channels in a layer")
@@ -79,7 +78,6 @@ net_arg.add_argument("--net_gcnorm", type=str2bool, default=True, help="whether 
 net_arg.add_argument("--net_batchnorm", type=str2bool, default=True, help="whether to use batch normalization")
 net_arg.add_argument("--net_bn_test_is_training", type=str2bool, default=False, help="is_training value for testing")
 
-# Data
 data_arg = add_argument_group("Data")
 data_arg.add_argument("--data_dump_prefix", type=str, default="./data_dump", help="prefix for the dump folder locations")
 data_arg.add_argument("--data_name", type=str, default="cne", help="prefix for the dump folder locations")
@@ -95,7 +93,6 @@ data_arg.add_argument("--use_lfnet", type=str2bool, default=False, help=""
 data_arg.add_argument("--use_sp", type=str2bool, default=False, help=""
     "if this is set to true, we expect lift to be dumped already for all images.")
 
-# Objective
 obj_arg = add_argument_group("obj")
 obj_arg.add_argument("--obj_num_kp", type=int, default=2000, help=""
     "number of keypoints per image")
@@ -112,7 +109,6 @@ obj_arg.add_argument("--obj_geod_type", type=str, default="episym",
 obj_arg.add_argument("--obj_geod_th", type=float, default=1e-4, help=""
     "theshold for the good geodesic distance")
 
-# Loss
 loss_arg = add_argument_group("loss")
 loss_arg.add_argument(
     "--loss_decay", type=float, default=0.0, help=""
@@ -133,8 +129,6 @@ loss_arg.add_argument(
     "--loss_essential_init_iter", type=int, default=20000, help=""
     "initial iterations to run only the classification loss")
 
-# -----------------------------------------------------------------------------
-# Training
 train_arg = add_argument_group("Train")
 train_arg.add_argument(
     "--run_mode", type=str, default="train", help=""
@@ -173,8 +167,6 @@ train_arg.add_argument(
     "--report_intv", type=int, default=1000, help=""
     "summary interval")
 
-# -----------------------------------------------------------------------------
-# Visualization
 vis_arg = add_argument_group('Visualization')
 vis_arg.add_argument(
     "--vis_dump", type=str2bool, default=False, help=""
@@ -189,11 +181,8 @@ vis_arg.add_argument(
     "vis is not none, then dump mask_before into vis_dir"
 )
 
-
-
 def setup_dataset(dataset_name):
     """Expands dataset name and directories properly"""
-
     # Use only the first one for dump
     dataset_name = dataset_name.split(".")[0]
 
@@ -417,13 +406,10 @@ def setup_dataset(dataset_name):
         data_dir += "hotel_pedraza---hotel_room_pedraza_2012_nov_25-maxpairs-10000-random---skip-10-dilate-25/"
         geom_type = "Calibration"
         vis_th = 0.5
-
     return data_dir, geom_type, vis_th
-
 
 def get_config():
     config, unparsed = parser.parse_known_args()
-
     # Setup the dataset related things
     for _mode in ["tr", "va", "te"]:
         data_dir, geom_type, vis_th = setup_dataset(
@@ -431,12 +417,7 @@ def get_config():
         setattr(config, "data_dir_" + _mode, data_dir)
         setattr(config, "data_geom_type_" + _mode, geom_type)
         setattr(config, "data_vis_th_" + _mode, vis_th)
-
     return config, unparsed
-
 
 def print_usage():
     parser.print_usage()
-
-#
-# config.py ends here
