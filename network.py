@@ -34,9 +34,7 @@ class MyNetwork(object):
         num_threads = os.getenv("OMP_NUM_THREADS", "")
         if num_threads != "":
             num_threads = int(num_threads)
-            print("limiting tensorflow to {} threads!".format(
-                num_threads
-            ))
+            print("limiting tensorflow to {} threads!".format(num_threads))
             # Limit
             tfconfig = tf.ConfigProto(
                 intra_op_parallelism_threads=num_threads,
@@ -82,7 +80,6 @@ class MyNetwork(object):
             # -------------------- Network archintecture --------------------
             # Import correct build_graph function
             from archs.cvpr2020 import build_graph
-            # Build graph
             print("Building Graph")
             # Preprocessing input, currently doing nothing
             x_in = pre_x_in(self.x_in, self.config.pre_x_in)
@@ -121,7 +118,6 @@ class MyNetwork(object):
                     weights = weights / tf.reduce_sum(weights, -1, keep_dims=True) 
                 else:
                     raise ValueError("Don't support it")
-
 
                 # Make input data (num_img_pair x num_corr x 4)
                 xx = tf.transpose(tf.reshape(
@@ -227,22 +223,13 @@ class MyNetwork(object):
             classif_loss_p = tf.reduce_sum(classif_losses * is_pos, axis=1)
             classif_loss_n = tf.reduce_sum(classif_losses * is_neg, axis=1)
 
-
-            classif_loss = tf.reduce_mean(
-                classif_loss_p * 0.5 / num_pos +
-                classif_loss_n * 0.5 / num_neg
-            )
+            classif_loss = tf.reduce_mean(classif_loss_p * 0.5 / num_pos + classif_loss_n * 0.5 / num_neg)
             tf.summary.scalar("classif_loss", classif_loss)
-            tf.summary.scalar(
-                "classif_loss_p",
-                tf.reduce_mean(classif_loss_p * 0.5 / num_pos))
-            tf.summary.scalar(
-                "classif_loss_n",
-                tf.reduce_mean(classif_loss_n * 0.5 / num_neg))
+            tf.summary.scalar("classif_loss_p", tf.reduce_mean(classif_loss_p * 0.5 / num_pos))
+            tf.summary.scalar("classif_loss_n", tf.reduce_mean(classif_loss_n * 0.5 / num_neg))
             precision = tf.reduce_mean(
                 tf.reduce_sum(tf.to_float(logit > 0) * is_pos, axis=1) /
-                tf.reduce_sum(tf.to_float(logit > 0) *
-                              (is_pos + is_neg), axis=1)
+                tf.reduce_sum(tf.to_float(logit > 0) * (is_pos + is_neg), axis=1)
             )
             tf.summary.scalar("precision", precision)
             recall = tf.reduce_mean(
@@ -258,8 +245,7 @@ class MyNetwork(object):
             if self.config.loss_essential > 0:
                 loss += (
                     self.config.loss_essential * essential_loss * tf.to_float(
-                        self.global_step >= tf.to_int64(
-                            self.config.loss_essential_init_iter)))
+                        self.global_step >= tf.to_int64(self.config.loss_essential_init_iter)))
             if self.config.loss_classif > 0:
                 loss += self.config.loss_classif * classif_loss
 
@@ -280,17 +266,13 @@ class MyNetwork(object):
                     num_neg = tf.nn.relu(tf.reduce_sum(is_neg, axis=1) - 1.0) + 1.0
                     classif_loss_p = tf.reduce_sum(classif_losses * is_pos, axis=1)
                     classif_loss_n = tf.reduce_sum(classif_losses * is_neg, axis=1)
-                    classif_loss = tf.reduce_mean(
-                        classif_loss_p * 0.5 / num_pos +
-                        classif_loss_n * 0.5 / num_neg
-                    )
+                    classif_loss = tf.reduce_mean(classif_loss_p * 0.5 / num_pos + classif_loss_n * 0.5 / num_neg)
                     classif_multi_logit += [classif_loss]
                 classif_multi_logit = tf.reduce_mean(tf.stack(classif_multi_logit))
                 loss += classif_multi_logit * self.config.loss_multi_logit
 
             tf.summary.scalar("loss", loss)
             return loss
-
 
     def _build_optim(self):
         """Build optimizer related ops and vars."""
@@ -384,7 +366,6 @@ class MyNetwork(object):
 
         print("Initializing...")
         self.sess.run(tf.global_variables_initializer())
-        # ----------------------------------------
         # Resume data if it already exists
         latest_checkpoint = tf.train.latest_checkpoint(self.res_dir_tr)
         b_resume = latest_checkpoint is not None

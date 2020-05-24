@@ -13,7 +13,6 @@ from transformations import quaternion_from_matrix
 from utils import loadh5, norm_points, norm_points_with_T, compute_T_with_imagesize
 
 
-
 def load_geom(geom_file, geom_type, scale_factor, flip_R=False):
     if geom_type == "calibration":
         # load geometry file
@@ -58,16 +57,10 @@ def load_geom(geom_file, geom_type, scale_factor, flip_R=False):
 def loadFromDir(train_data_dir, gt_div_str="", bUseColorImage=True,
                 input_width=512, crop_center=True, load_lift=False):
     """Loads data from directory.
-
     train_data_dir : Directory containing data
-
     gt_div_str : suffix for depth (e.g. -8x8)
-
     bUseColorImage : whether to use color or gray (default false)
-
-    input_width : input image rescaling size
-
-    """
+    input_width : input image rescaling size"""
 
     # read the list of imgs and the homography
     train_data_dir = train_data_dir.rstrip("/") + "/"
