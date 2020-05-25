@@ -530,7 +530,6 @@ class MyNetwork(object):
 
     def test(self, data):
         """Test routine"""
-
         # Check if model exists
         if not os.path.exists(self.save_file_best + ".index"):
             print("Model File {} does not exist! Quiting".format(self.save_file_best))

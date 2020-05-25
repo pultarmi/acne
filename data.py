@@ -260,11 +260,8 @@ def loadFromDir(train_data_dir, gt_div_str="", bUseColorImage=True,
             ]
             # New desc
             desc += [h5_desc]
-
     print("")
-
-    return (x, np.asarray(geom),
-            np.asarray(vis), depth, kp, desc)
+    return (x, np.asarray(geom), np.asarray(vis), depth, kp, desc)
 
 
 def load_data(config, var_mode):
@@ -293,14 +290,12 @@ def load_data(config, var_mode):
 
         # use only the first two characters for shorter abbrv
         var_mode = var_mode[:2]
-
         # Now load data.
         var_name_list = [
             "xs", "ys", "Rs", "ts",
             "img1s", "cx1s", "cy1s", "f1s",
             "img2s", "cx2s", "cy2s", "f2s",
         ]
-        
 
         data_folder = config.data_dump_prefix
         if config.use_lift:
@@ -480,16 +475,12 @@ def load_data(config, var_mode):
             data["xs"][i] = np.concatenate([x1, x2], -1)[None]
     else:
         raise ValueError("wrong Fundamental matrix")
-
-
     return data
 
 
 def load_data_oan(config, var_mode):
     """Main data loading routine"""
-
     print("Loading {} data".format(var_mode))
-
     # use only the first two characters for shorter abbrv
     var_mode = var_mode[:2]
 
@@ -533,5 +524,4 @@ def load_data_oan(config, var_mode):
                     data_dict[key] += [v_]
                 else:
                     data_dict[key] += [np.array(h5file[key][index_])]
-    return data_dict    
-# ends here
+    return data_dict

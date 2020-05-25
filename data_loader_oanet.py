@@ -1,5 +1,4 @@
 # Adapted from OANet repo:  https://github.com/zjhthu/OANet.git
-
 from __future__ import print_function
 import sys
 import os
@@ -11,7 +10,6 @@ import torch
 import torch.utils.data as data
 
 def np_skew_symmetric(v):
-
     zero = np.zeros_like(v[:, 0])
 
     M = np.stack([
@@ -19,7 +17,6 @@ def np_skew_symmetric(v):
         v[:, 2], zero, -v[:, 0],
         -v[:, 1], v[:, 0], zero,
     ], axis=1)
-
     return M
 
 # from ACNe code
@@ -40,11 +37,9 @@ def compute_T_with_imagesize(w, h, f=None, ratio=1.0):
 
     return T.copy()
 
-
 def norm_points_with_T(x, T):
     x = x * np.asarray([T[0,0], T[1,1]]) + np.array([T[0,2], T[1,2]])
     return x
-
 
 def collate_fn(batch):
     batch_size = len(batch)
@@ -75,8 +70,6 @@ def collate_fn(batch):
         data["ys"] = np.repeat(data["ys"], 2, axis=-1)
     return data
 
-
-
 class CorrespondencesDataset(data.Dataset):
     def __init__(self, filename, config, mode="train"):
         self.config = config
@@ -105,7 +98,6 @@ class CorrespondencesDataset(data.Dataset):
         if self.data is None:
             self.data = h5py.File(self.filename,'r')
         index = str(index_in)
-
         
         xs = np.asarray(self.data['xs'][index])
         # print(xs.shape)
@@ -211,4 +203,3 @@ class CorrespondencesDataset(data.Dataset):
     def __del__(self):
         if self.data is not None and not self.bool_acne_format:
             self.data.close()
-
