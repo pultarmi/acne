@@ -268,7 +268,7 @@ def load_data(config, var_mode):
     """Main data loading routine"""
     # insert other dataset format such oan
     if config.data_name.startswith("oan"):
-        print('AAAAAAAAAAA')
+        # print('AAAAAAAAAAA')
         print("load {}".format(config.data_name))
         if var_mode == "train":
             """
@@ -337,6 +337,7 @@ def load_data(config, var_mode):
             appendix = ""
 
             for var_name in var_name_list:
+                print(os.path.join(cur_folder, cur_var_name))
                 cur_var_name = var_name + "_" + appendix + var_mode
                 in_file_name = os.path.join(cur_folder, cur_var_name) + ".pkl"
                 with open(in_file_name, "rb") as ifp:

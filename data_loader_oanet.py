@@ -145,7 +145,6 @@ class CorrespondencesDataset(data.Dataset):
                 f2i = f2
                 f2j = f2
 
-                
             K1 = np.asarray([
                 [f1i, 0, cx1],
                 [0, f1j, cy1],

@@ -7,9 +7,7 @@ from ops import conv1d_layer, conv1d_resnet_block
 
 def build_graph(x_in, is_training, config, weight=None):
     vis_dict = {}
-
     activation_fn = tf.nn.relu
-
     x_in_shp = tf.shape(x_in)
 
     cur_input = x_in
