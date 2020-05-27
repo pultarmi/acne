@@ -142,7 +142,8 @@ def conv1d_layer(inputs, ksize, nchannel, activation_fn, perform_bn,
                         is_training, data_format, config, weight)
 
     # Normal convolution
-    with tf.variable_scope("self-conv"):
+    # with tf.variable_scope("self-conv"):
+    with tf.compat.v1.variable_scope("self-conv"):
         W, b = get_W_b_conv1d(in_channel, nchannel, self_ksize)
         # Convolution in the valid region only
         linout = tf.nn.conv2d(
