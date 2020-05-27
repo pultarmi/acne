@@ -45,7 +45,7 @@ class MyNetwork(object):
 
         tfconfig.gpu_options.allow_growth = True
         # self.sess = tf.Session(config=tfconfig)
-        self.sess = tf.compat.v1.Session()(config=tfconfig)
+        self.sess = tf.compat.v1.Session(config=tfconfig)
 
     def _build_placeholder(self):
         """Build placeholders."""
