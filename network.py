@@ -40,7 +40,8 @@ class MyNetwork(object):
                 inter_op_parallelism_threads=num_threads,
             )
         else:
-            tfconfig = tf.ConfigProto()
+            # tfconfig = tf.ConfigProto()
+            tfconfig = tf.compat.v1.ConfigProto()
 
         tfconfig.gpu_options.allow_growth = True
         self.sess = tf.Session(config=tfconfig)
