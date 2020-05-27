@@ -3,7 +3,10 @@
 import os
 import sys
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 from parse import parse
 from tqdm import trange
 import pdb
