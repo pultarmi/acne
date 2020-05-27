@@ -97,7 +97,8 @@ def build_graph(x_in, is_training, config, weight=None):
             logit_softmax = tf.reshape(logit_softmax, (x_in_shp[0], x_in_shp[2]))
             vis_dict["logit_softmax"] = logit_softmax
 
-    with tf.variable_scope("output"):
+    # with tf.variable_scope("output"):
+    with tf.compat.v1.variable_scope("output"):
         # logit for local attention
         vis_dict[cur_input.name] = cur_input
         cur_input,weight_output = conv1d_layer(
