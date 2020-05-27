@@ -10,7 +10,8 @@ def norm(x, norm_type, is_train, G=32, esp=1e-5):
         if norm_type == 'none':
             output = x
         elif norm_type == 'bn':
-            with tf.variable_scope("bn"):
+            # with tf.variable_scope("bn"):
+            with tf.compat.v1.variable_scope("bn"):
                 output = tf.layers.batch_normalization(
                     inputs=x,
                     center=False, scale=False,
