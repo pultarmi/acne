@@ -13,6 +13,8 @@ use3d = False
 config = None
 
 config, unparsed = get_config()
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 print("-------------------------Deep Essential-------------------------")
 print("Note: To combine datasets, use .")
@@ -20,9 +22,10 @@ print("Note: To combine datasets, use .")
 # def get_available_gpus():
 #     local_device_protos = device_lib.list_local_devices()
 #     return [x.name for x in local_device_protos if x.device_type == 'GPU']
-# print('---------------')
+print('---------------')
 # print(device_lib.list_local_devices())
-# print('---------------')
+print(tf.test.is_gpu_available())
+print('---------------')
 
 def main(config):
     # Run propper mode
