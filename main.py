@@ -6,7 +6,7 @@ from __future__ import print_function
 from config import get_config, print_usage
 from data import load_data
 from network import MyNetwork
-from tensorflow.python.client import device_lib
+# from tensorflow.python.client import device_lib
 
 eps = 1e-10
 use3d = False
@@ -20,9 +20,9 @@ print("Note: To combine datasets, use .")
 def get_available_gpus():
     local_device_protos = device_lib.list_local_devices()
     return [x.name for x in local_device_protos if x.device_type == 'GPU']
-print('---------------')
-print(device_lib.list_local_devices())
-print('---------------')
+# print('---------------')
+# print(device_lib.list_local_devices())
+# print('---------------')
 
 def main(config):
     # Run propper mode
