@@ -22,10 +22,6 @@ print('---------------')
 print(tf.test.is_gpu_available())
 print('---------------')
 
-# load on castor
-# TensorFlow/2.2.0-fosscuda-2019b-Python-3.7.4
-# PyTorch/1.5.0-fosscuda-2019b-Python-3.7.4
-
 def main(config):
     # Run propper mode
     if config.run_mode == "train":
