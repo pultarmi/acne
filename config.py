@@ -35,10 +35,8 @@ neigh_arg.add_argument("--bool_hard_attention", type=str2bool, default=False, he
 neigh_arg.add_argument("--matching_crossCheck", type=str2bool, default=False, help="whether do the cross check when dumping the data")
 
 neigh_arg.add_argument("--bool_use_weight_for_score", type=str2bool, default=False, help="button to trun on the hard attention")
-neigh_arg.add_argument("--nonlinearity_output", type=str2bool, default=False, help=""
-    "whether add linearity output before sigmoid")
-neigh_arg.add_argument("--ratio_test", type=float, default=None, help=""
-    "do ratio test during feature matching")
+neigh_arg.add_argument("--nonlinearity_output", type=str2bool, default=False, help="whether add linearity output before sigmoid")
+neigh_arg.add_argument("--ratio_test", type=float, default=None, help="do ratio test during feature matching")
 neigh_arg.add_argument("--sigma", type=float, default=1.0, help="number of layers")
 neigh_arg.add_argument("--loss_gaussian_sigma", type=float, default=1.0, help="number of layers")
 neigh_arg.add_argument("--loss_var", type=float, default=0.0, help="number of layers")
@@ -58,22 +56,17 @@ neigh_arg.add_argument("--divergence_opt", type=str, default="cross_entropy", he
 neigh_arg.add_argument("--weight_opt", type=str, default="relu_tanh", help="where the activation should be in case of resnet")
 neigh_arg.add_argument("--gcn_pos", type=str, default="pre", help="where the activation should be in case of resnet")
 
-neigh_arg.add_argument("--w_opt", type=str, default=None,
-    choices=["none", None, "l2", "l2_sigma", "9w"], help="where the activation should be in case of resnet")
+neigh_arg.add_argument("--w_opt", type=str, default=None, choices=["none", None, "l2", "l2_sigma", "9w"], help="where the activation should be in case of resnet")
 neigh_arg.add_argument("--kernel_size", type=float, default=0.0, help="kernel_size for the 9w strategy")
 
-neigh_arg.add_argument("--pre_x_in", type=str, default="4",choices=["4", "3", "9"], help=""
-    "Different choice for the input")
-neigh_arg.add_argument("--var_mode", type=str, default="division", help=""
-    "Different choice for the input")
-neigh_arg.add_argument("--mean_mode", type=str, default="1", help=""
-    "calculate the mean value for the gcn layer")
+neigh_arg.add_argument("--pre_x_in", type=str, default="4",choices=["4", "3", "9"], help="Different choice for the input")
+neigh_arg.add_argument("--var_mode", type=str, default="division", help="Different choice for the input")
+neigh_arg.add_argument("--mean_mode", type=str, default="1", help="calculate the mean value for the gcn layer")
 
 net_arg = add_argument_group("Network")
 net_arg.add_argument("--net_depth", type=int, default=12, help="number of layers")
 net_arg.add_argument("--net_nchannel", type=int, default=128, help="number of channels in a layer")
-net_arg.add_argument("--net_act_pos", type=str, default="post",
-    choices=["pre", "mid", "post"], help="where the activation should be in case of resnet")
+net_arg.add_argument("--net_act_pos", type=str, default="post", choices=["pre", "mid", "post"], help="where the activation should be in case of resnet")
 net_arg.add_argument("--net_gcnorm", type=str2bool, default=True, help="whether to use context normalization for each layer")
 net_arg.add_argument("--net_batchnorm", type=str2bool, default=True, help="whether to use batch normalization")
 net_arg.add_argument("--net_bn_test_is_training", type=str2bool, default=False, help="is_training value for testing")
@@ -84,41 +77,25 @@ data_arg.add_argument("--data_name", type=str, default="cne", help="prefix for t
 data_arg.add_argument("--data_tr", type=str, default="st_peters", help="name of the dataset for train")
 data_arg.add_argument("--data_va", type=str, default="st_peters", help="name of the dataset for valid")
 data_arg.add_argument("--data_te", type=str, default="st_peters", help="name of the dataset for test")
-data_arg.add_argument("--data_crop_center", type=str2bool, default=False, help=""
-    "whether to crop center of the image to match the expected input for methods that expect a square input")
-data_arg.add_argument("--use_lift", type=str2bool, default=False, help=""
-    "if this is set to true, we expect lift to be dumped already for all images.")
-data_arg.add_argument("--use_lfnet", type=str2bool, default=False, help=""
-    "if this is set to true, we expect lift to be dumped already for all images.")
-data_arg.add_argument("--use_sp", type=str2bool, default=False, help=""
-    "if this is set to true, we expect lift to be dumped already for all images.")
+data_arg.add_argument("--data_crop_center", type=str2bool, default=False, help="whether to crop center of the image to match the expected input for methods that expect a square input")
+data_arg.add_argument("--use_lift", type=str2bool, default=False, help="if this is set to true, we expect lift to be dumped already for all images.")
+data_arg.add_argument("--use_lfnet", type=str2bool, default=False, help="if this is set to true, we expect lift to be dumped already for all images.")
+data_arg.add_argument("--use_sp", type=str2bool, default=False, help="if this is set to true, we expect lift to be dumped already for all images.")
 
 obj_arg = add_argument_group("obj")
 obj_arg.add_argument("--obj_num_kp", type=int, default=2000, help="number of keypoints per image")
-obj_arg.add_argument("--obj_top_k", type=int, default=-1, help=""
-    "number of keypoints above the threshold to use for "
-    "essential matrix estimation. put -1 to use all. ")
-obj_arg.add_argument("--obj_num_nn", type=int, default=1, help="number of nearest neighbors in terms of descriptor "
-    "distance that are considered when generating the "
-    "distance matrix")
-obj_arg.add_argument("--obj_geod_type", type=str, default="episym",
-    choices=["sampson", "episqr", "episym"], help="type of geodesic distance")
-obj_arg.add_argument("--obj_geod_th", type=float, default=1e-4, help=""
-    "theshold for the good geodesic distance")
+obj_arg.add_argument("--obj_top_k", type=int, default=-1, help="number of keypoints above the threshold to use for essential matrix estimation. put -1 to use all. ")
+obj_arg.add_argument("--obj_num_nn", type=int, default=1, help="number of nearest neighbors in terms of descriptor distance that are considered when generating the distance matrix")
+obj_arg.add_argument("--obj_geod_type", type=str, default="episym", choices=["sampson", "episqr", "episym"], help="type of geodesic distance")
+obj_arg.add_argument("--obj_geod_th", type=float, default=1e-4, help="theshold for the good geodesic distance")
 
 loss_arg = add_argument_group("loss")
-loss_arg.add_argument("--loss_decay", type=float, default=0.0, help=""
-    "l2 decay")
-loss_arg.add_argument("--loss_EM", type=float, default=0.0, help=""
-    "Use EM loss")
-loss_arg.add_argument("--loss_gaussian", type=float, default=0.0, help=""
-    "Use EM loss")
-loss_arg.add_argument("--loss_classif", type=float, default=1.0, help=""
-    "weight of the classification loss")
-loss_arg.add_argument("--loss_essential", type=float, default=0.1, help=""
-    "weight of the essential loss")
-loss_arg.add_argument("--loss_essential_init_iter", type=int, default=20000, help=""
-    "initial iterations to run only the classification loss")
+loss_arg.add_argument("--loss_decay", type=float, default=0.0, help="l2 decay")
+loss_arg.add_argument("--loss_EM", type=float, default=0.0, help="Use EM loss")
+loss_arg.add_argument("--loss_gaussian", type=float, default=0.0, help="Use EM loss")
+loss_arg.add_argument("--loss_classif", type=float, default=1.0, help="weight of the classification loss")
+loss_arg.add_argument("--loss_essential", type=float, default=0.1, help="weight of the essential loss")
+loss_arg.add_argument("--loss_essential_init_iter", type=int, default=20000, help="initial iterations to run only the classification loss")
 
 train_arg = add_argument_group("Train")
 train_arg.add_argument("--run_mode", type=str, default="train", help="run_mode")
