@@ -31,7 +31,7 @@ class MyNetwork(object):
         self._build_summary()
         self._build_writer()
 
-    # tf.keras.models.load_model('logs_pre/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---loss_multi_logit=1---use_fundamental=2---data_name=oan_indoor/models-best.data-00000-of-00001')
+    tf.keras.models.load_model('logs_pre/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---loss_multi_logit=1---use_fundamental=2---data_name=oan_indoor/models-best.data-00000-of-00001')
 
     def _init_tensorflow(self):
         # limit CPU threads with OMP_NUM_THREADS
