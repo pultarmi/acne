@@ -6,7 +6,6 @@ from __future__ import print_function
 from config import get_config, print_usage
 from data import load_data
 from network import MyNetwork
-# from tensorflow.python.client import device_lib
 
 eps = 1e-10
 use3d = False
@@ -19,13 +18,13 @@ tf.disable_v2_behavior()
 print("-------------------------Deep Essential-------------------------")
 print("Note: To combine datasets, use .")
 
-# def get_available_gpus():
-#     local_device_protos = device_lib.list_local_devices()
-#     return [x.name for x in local_device_protos if x.device_type == 'GPU']
 print('---------------')
-# print(device_lib.list_local_devices())
 print(tf.test.is_gpu_available())
 print('---------------')
+
+# load on castor
+# TensorFlow/2.2.0-fosscuda-2019b-Python-3.7.4
+# PyTorch/1.5.0-fosscuda-2019b-Python-3.7.4
 
 def main(config):
     # Run propper mode
