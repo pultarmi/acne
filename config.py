@@ -121,30 +121,18 @@ loss_arg.add_argument("--loss_essential_init_iter", type=int, default=20000, hel
     "initial iterations to run only the classification loss")
 
 train_arg = add_argument_group("Train")
-train_arg.add_argument("--run_mode", type=str, default="train", help=""
-    "run_mode")
-train_arg.add_argument("--train_batch_size", type=int, default=32, help=""
-    "batch size")
-train_arg.add_argument("--train_max_tr_sample", type=int, default=10000, help=""
-    "number of max training samples")
-train_arg.add_argument("--train_max_va_sample", type=int, default=1000, help=""
-    "number of max validation samples")
-train_arg.add_argument("--train_max_te_sample", type=int, default=1000, help=""
-    "number of max test samples")
-train_arg.add_argument("--train_lr", type=float, default=1e-3, help=""
-    "learning rate")
-train_arg.add_argument("--train_iter", type=int, default=500000, help=""
-    "training iterations to perform")
-train_arg.add_argument("--res_dir", type=str, default="./logs", help=""
-    "base directory for results")
-train_arg.add_argument("--log_dir", type=str, default="", help=""
-    "save directory name inside results")
-train_arg.add_argument("--test_log_dir", type=str, default="", help=""
-    "which directory to test inside results")
-train_arg.add_argument("--val_intv", type=int, default=5000, help=""
-    "validation interval")
-train_arg.add_argument("--report_intv", type=int, default=1000, help=""
-    "summary interval")
+train_arg.add_argument("--run_mode", type=str, default="train", help="run_mode")
+train_arg.add_argument("--train_batch_size", type=int, default=32, help="batch size")
+train_arg.add_argument("--train_max_tr_sample", type=int, default=10000, help="number of max training samples")
+train_arg.add_argument("--train_max_va_sample", type=int, default=1000, help="number of max validation samples")
+train_arg.add_argument("--train_max_te_sample", type=int, default=1000, help="number of max test samples")
+train_arg.add_argument("--train_lr", type=float, default=1e-3, help="learning rate")
+train_arg.add_argument("--train_iter", type=int, default=500000, help="training iterations to perform")
+train_arg.add_argument("--res_dir", type=str, default="./logs", help="base directory for results")
+train_arg.add_argument("--log_dir", type=str, default="", help="save directory name inside results")
+train_arg.add_argument("--test_log_dir", type=str, default="", help="which directory to test inside results")
+train_arg.add_argument("--val_intv", type=int, default=5000, help="validation interval")
+train_arg.add_argument("--report_intv", type=int, default=1000, help="summary interval")
 
 vis_arg = add_argument_group('Visualization')
 vis_arg.add_argument("--vis_dump", type=str2bool, default=False, help="turn this on to dump data for visualization")

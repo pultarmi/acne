@@ -508,7 +508,8 @@ def test_process(mode, sess,
                  data,
                  res_dir, config, va_res_only=False):
 
-    import tensorflow as tf
+    import tensorflow.compat.v1 as tf
+    tf.disable_v2_behavior()
     txt_save_dir = config.save_test_dir
     if txt_save_dir == "":
         txt_save_dir = os.path.join(res_dir, mode)
