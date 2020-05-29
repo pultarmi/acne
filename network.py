@@ -508,7 +508,6 @@ class MyNetwork(object):
                 if self.config.use_fundamental > 0:
                     test_process_ins += [self.T1_in, self.T2_in, self.K1_in, self.K2_in]
 
-                print('AAAAAAAAAAA')
                 va_res, va_res_ours_ransac = test_process(
                     "valid", self.sess, cur_global_step,
                     self.summary_op, self.summary_va,
