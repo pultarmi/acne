@@ -522,7 +522,6 @@ def test_process(mode, sess,
     else:
         x, y, R, t, is_training = test_process_ins
 
-    print('CCCCCCCCCCCCCCCC')
     time_us = []
     time_ransac_us = []
     time_ransac = []
@@ -531,10 +530,10 @@ def test_process(mode, sess,
     inlier_ransac = []
     inlier_ransac_us = []
 
-    print('BBBBBBBBBBB')
     if mode == "test":
         print("[{}] {}: Start testing".format(config.data_tr, time.asctime()))
 
+    print('BBBBBBBBBBB')
     # Unpack some references
     xs = data["xs"]
     ys = data["ys"]
@@ -554,6 +553,7 @@ def test_process(mode, sess,
     K2s = data["K2s"]
     # ratios = data["ratios"]
     # mutuals = data["mutuals"]
+    print('CCCCCCCCCCCCCCCC')
 
     # Validation
     num_sample = len(xs)
