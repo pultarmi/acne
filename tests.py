@@ -49,7 +49,6 @@ from multiprocessing import Pool as ThreadPool
 import multiprocessing as mp
 
 def get_pool_result(num_processor, fun, args):
-    # print('AAAAA')
     pool = ThreadPool(num_processor)
     print('BBBBBB')
     print(len(args))
@@ -59,7 +58,6 @@ def get_pool_result(num_processor, fun, args):
     print('CCCCCC')
     pool.close()
     pool.join()
-    # print('DDDDDDD')
     return pool_res
 
 def denorm_points(x, T):
@@ -666,7 +664,7 @@ def test_process(mode, sess,
     eval_step, eval_step_i = num_sample, 0 
 
     for cur_val_idx in xrange(num_sample):
-        print(cur_val_idx)
+        # print(cur_val_idx)
         # _xs = xs[cur_val_idx][:, :, :].reshape(1, 1, -1, 4)
         # _ys = ys[cur_val_idx][:, :].reshape(1, -1, 2)
         _xs = np.array(last_x_ins[cur_val_idx], np.float64) # TO be compatible with iterative topk framework
