@@ -48,24 +48,21 @@ except Exception:
 from multiprocessing import Pool as ThreadPool 
 import multiprocessing as mp
 
-
 def get_pool_result(num_processor, fun, args):
+    print('AAAAA')
     pool = ThreadPool(num_processor)
     pool_res = pool.map(fun, args)
     pool.close()
     pool.join()
+    print('BBBBBB')
     return pool_res
-
 
 def denorm_points(x, T):
     x = (x - np.array([T[0,2], T[1,2]])) / np.asarray([T[0,0], T[1,1]])
     return x
 
-
 def evaluate_R_t(R_gt, t_gt, R, t, q_gt=None):
-
     # from Utils.transformations import quaternion_from_matrix
-
     t = t.flatten()
     t_gt = t_gt.flatten()
 
@@ -92,9 +89,7 @@ def evaluate_R_t(R_gt, t_gt, R, t, q_gt=None):
         # This should never happen! Debug here
         import IPython
         IPython.embed()
-
     return err_q, err_t
-
 
 def eval_nondecompose(p1s, p2s, E_hat, dR, dt, scores):
 
@@ -142,10 +137,7 @@ def eval_nondecompose(p1s, p2s, E_hat, dR, dt, scores):
 
     return err_q, err_t, loss_q, loss_t, np.sum(num_inlier), mask_updated
 
-
-def eval_decompose_F(p1s, p2s, dR, dt, K1, K2, mask=None, method=cv2.LMEDS, probs=None,
-                   weighted=False, use_prob=True, idx=None):
-
+def eval_decompose_F(p1s, p2s, dR, dt, K1, K2, mask=None, method=cv2.LMEDS, probs=None, weighted=False, use_prob=True, idx=None):
     # import wrappers
     if mask is None:
         mask = np.ones((len(p1s),), dtype=bool)
@@ -254,13 +246,9 @@ def eval_decompose_F(p1s, p2s, dR, dt, K1, K2, mask=None, method=cv2.LMEDS, prob
         mask_updated[mask] = mask_new2
 
     # print("err_q: {} err_t: {}".format(err_q, err_t))
-
     return err_q, err_t, loss_q, loss_t, np.sum(num_inlier), mask_updated
 
-
-def eval_decompose(p1s, p2s, dR, dt, threshold=0.001, mask=None, method=cv2.LMEDS, probs=None,
-                   weighted=False, use_prob=True):
-
+def eval_decompose(p1s, p2s, dR, dt, threshold=0.001, mask=None, method=cv2.LMEDS, probs=None, weighted=False, use_prob=True):
     if mask is None:
         mask = np.ones((len(p1s),), dtype=bool)
     # Change mask type
@@ -328,13 +316,11 @@ def eval_decompose(p1s, p2s, dR, dt, threshold=0.001, mask=None, method=cv2.LMED
 
     return err_q, err_t, loss_q, loss_t, np.sum(num_inlier), mask_updated
 
-
 def compute_fundamental(x1, x2):
     """    Computes the fundamental matrix from corresponding points
         (x1,x2 3*n arrays) using the 8 point algorithm.
         Each row in the A matrix below is constructed as
         [x'*x, x'*y, x', y'*x, y'*y, y', x, y, 1] """
-
     n = len(x1)
     if len(x2) != n:
         raise ValueError("Number of points don't match.")
@@ -356,9 +342,7 @@ def compute_fundamental(x1, x2):
     U, S, V = np.linalg.svd(F)
     S[2] = 0
     F = np.dot(U, np.dot(np.diag(S), V))
-
     return F / F[2, 2]
-
 
 def eval_decompose_8points(p1s, p2s, dR, dt, mask=None, method=None):
     if mask is None:
@@ -388,9 +372,7 @@ def eval_decompose_8points(p1s, p2s, dR, dt, mask=None, method=None):
         # Change mask type
         mask_new = mask_new.flatten().astype(bool)
         mask_updated[mask] = mask_new
-
     return err_q, err_t, loss_q, loss_t, np.sum(num_inlier), mask_updated
-
 
 def test_sample(args):
     _x1, _x2, _dR, _dt, e_hat_out, y_hat_out, y_g_hat_out, y_w_hat_out, config, K1, K2, cur_val_idx, dump_test_cache_dir, test_list = args
@@ -407,7 +389,6 @@ def test_sample(args):
     else:
         _valid_th = np.sort(_valid)[::-1][config.obj_top_k]
         _mask_before = _valid >= max(0, _valid_th)
-
 
     # For every things to test
     _use_prob = True
@@ -494,10 +475,8 @@ def test_sample(args):
             #     with open(dump_test_cache_fn, "w") as ofp:
             #         ofp.write("{:e}, {:e}, {:d}\n".format(
             #             _err_q, _err_t, _num_inlier))
-
         res_dict[_test] = [cur_val_idx, _err_q, _err_t, _num_inlier]
     return res_dict
-
 
 def test_process(mode, sess,
                  cur_global_step, merged_summary_op, summary_writer,
@@ -748,10 +727,8 @@ def test_process(mode, sess,
         eval_step_i += 1
 
         if eval_step_i % eval_step == 0:
-            print('getting results')
             results += get_pool_result(num_processor, test_sample, pool_arg)
             pool_arg = []
-    print('CCCCCCCCCCCC')
     if len(pool_arg) > 0:
         results += get_pool_result(num_processor, test_sample, pool_arg)
 
@@ -874,9 +851,5 @@ def test_process(mode, sess,
     if mode == "test":
         print("[{}] {}: End testing".format(
             config.data_tr, time.asctime()))
-
     # Return qt_auc20 of ours
     return ret_val, ret_val_ours_ransac
-
-#
-# test.py ends here

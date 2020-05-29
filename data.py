@@ -268,7 +268,6 @@ def load_data(config, var_mode):
     """Main data loading routine"""
     # insert other dataset format such oan
     if config.data_name.startswith("oan"):
-        # print('AAAAAAAAAAA')
         print("load {}".format(config.data_name))
         if var_mode == "train":
             """
