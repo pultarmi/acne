@@ -416,7 +416,9 @@ class MyNetwork(object):
         # The training loop
         batch_size = self.config.train_batch_size
         max_iter = self.config.train_iter
-        
+
+        print(max_iter)
+        print(max_iter)
         for step in trange(step, max_iter, ncols=self.config.tqdm_width):
             # Batch construction
             # Get a random training batch
@@ -494,20 +496,20 @@ class MyNetwork(object):
                     global_step=self.global_step,
                     write_meta_graph=False)
             # Validation
-            print('BBBBBBB')
             if b_validate:
-                print('CCCCCCCC')
                 va_res = 0
                 cur_global_step = res["global_step"]
                 score = self.last_logit # defaul score: local attention
                 if self.config.weight_opt == "sigmoid_softmax":
                     score = [self.last_logit, self.logit_softmax, self.last_weights]
 
+                print('CCCCCCCC')
                 test_process_ins = [self.x_in, self.y_in, self.R_in, self.t_in, self.is_training] 
 
                 if self.config.use_fundamental > 0:
                     test_process_ins += [self.T1_in, self.T2_in, self.K1_in, self.K2_in]
-                    
+
+                print('DDDDDDDDD')
                 va_res, va_res_ours_ransac = test_process(
                     "valid", self.sess, cur_global_step,
                     self.summary_op, self.summary_va,
