@@ -1,6 +1,10 @@
 # Filename: test.py
 # License: LICENSES/LICENSE_UVIC_EPFL
 
+from multiprocessing import set_start_method
+set_start_method("spawn")
+from multiprocessing import get_context
+
 import datetime
 import os
 import sys
@@ -48,9 +52,6 @@ except Exception:
 from multiprocessing import Pool as ThreadPool 
 import multiprocessing as mp
 
-from multiprocessing import set_start_method
-set_start_method("spawn")
-from multiprocessing import get_context
 
 def get_pool_result(num_processor, fun, args):
     with get_context("spawn").Pool() as pool:
