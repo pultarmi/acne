@@ -507,9 +507,10 @@ def test_process(mode, sess,
                  last_e_hat, last_logit, last_x_in,
                  data,
                  res_dir, config, va_res_only=False):
-
+    print('BBBBBBBBBBB')
     import tensorflow.compat.v1 as tf
     tf.disable_v2_behavior()
+
     txt_save_dir = config.save_test_dir
     if txt_save_dir == "":
         txt_save_dir = os.path.join(res_dir, mode)
@@ -517,6 +518,7 @@ def test_process(mode, sess,
     if not os.path.exists(dump_test_cache_dir):
         os.makedirs(dump_test_cache_dir)
 
+    print('CCCCCCCCCCCCCCCC')
     if config.use_fundamental > 0:
         x, y, R, t, is_training, T1_in, T2_in, K1_in, K2_in = test_process_ins
     else:
