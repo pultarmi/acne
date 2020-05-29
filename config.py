@@ -108,7 +108,8 @@ train_arg.add_argument("--train_iter", type=int, default=500000, help="training 
 train_arg.add_argument("--res_dir", type=str, default="./logs", help="base directory for results")
 train_arg.add_argument("--log_dir", type=str, default="", help="save directory name inside results")
 train_arg.add_argument("--test_log_dir", type=str, default="", help="which directory to test inside results")
-train_arg.add_argument("--val_intv", type=int, default=5000, help="validation interval")
+# train_arg.add_argument("--val_intv", type=int, default=5000, help="validation interval")
+train_arg.add_argument("--val_intv", type=int, default=100, help="validation interval")
 train_arg.add_argument("--report_intv", type=int, default=1000, help="summary interval")
 
 vis_arg = add_argument_group('Visualization')

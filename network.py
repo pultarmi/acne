@@ -495,6 +495,7 @@ class MyNetwork(object):
                     write_meta_graph=False)
             # Validation
             if b_validate:
+                print('VALIDATING')
                 va_res = 0
                 cur_global_step = res["global_step"]
                 score = self.last_logit # defaul score: local attention
