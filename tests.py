@@ -596,7 +596,6 @@ def test_process(mode, sess,
         final_weight = last_logit
     # Run every test independently. might have different number of keypoints
     for idx_cur in xrange(num_sample):
-        print(idx_cur)
         # Use minimum kp in batch to construct the batch
         _xs = np.array(
             xs[idx_cur][:, :, :]
@@ -677,13 +676,13 @@ def test_process(mode, sess,
 
     results, pool_arg = [], []
 
-    print('CCCCCCCCCCCC')
     num_processor = int(mp.cpu_count() * 0.9)
     # num_processor = 12
 
     eval_step, eval_step_i = num_sample, 0 
 
     for cur_val_idx in xrange(num_sample):
+        print(cur_val_idx)
         # _xs = xs[cur_val_idx][:, :, :].reshape(1, 1, -1, 4)
         # _ys = ys[cur_val_idx][:, :].reshape(1, -1, 2)
         _xs = np.array(last_x_ins[cur_val_idx], np.float64) # TO be compatible with iterative topk framework
@@ -745,14 +744,13 @@ def test_process(mode, sess,
             [0, 0, 1],
         ])
 
-        pool_arg += [
-            (_x1, _x2, _dR, _dt, e_hat_out, y_hat_out, y_g_hat_out, y_w_hat_out, config, K1, K2, cur_val_idx, dump_test_cache_dir, test_list)
-        ]
+        pool_arg += [(_x1, _x2, _dR, _dt, e_hat_out, y_hat_out, y_g_hat_out, y_w_hat_out, config, K1, K2, cur_val_idx, dump_test_cache_dir, test_list)]
         eval_step_i += 1
 
         if eval_step_i % eval_step == 0:
             results += get_pool_result(num_processor, test_sample, pool_arg)
             pool_arg = []
+    print('CCCCCCCCCCCC')
     if len(pool_arg) > 0:
         results += get_pool_result(num_processor, test_sample, pool_arg)
 
