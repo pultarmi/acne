@@ -748,6 +748,7 @@ def test_process(mode, sess,
         eval_step_i += 1
 
         if eval_step_i % eval_step == 0:
+            print('getting results')
             results += get_pool_result(num_processor, test_sample, pool_arg)
             pool_arg = []
     print('CCCCCCCCCCCC')
