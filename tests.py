@@ -49,15 +49,17 @@ from multiprocessing import Pool as ThreadPool
 import multiprocessing as mp
 
 def get_pool_result(num_processor, fun, args):
-    print('AAAAA')
+    # print('AAAAA')
     pool = ThreadPool(num_processor)
     print('BBBBBB')
-    print(args)
+    print(len(args))
+    print(len(args))
+    print(len(args))
     pool_res = pool.map(fun, args)
     print('CCCCCC')
     pool.close()
     pool.join()
-    print('DDDDDDD')
+    # print('DDDDDDD')
     return pool_res
 
 def denorm_points(x, T):
