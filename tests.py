@@ -570,7 +570,6 @@ def test_process(mode, sess,
             # "ours_magsac{}".format(F_suffix),
         ]
 
-    print('CCCCCCCCCCCCCCCC')
     eval_res = {}
     measure_list = ["err_q", "err_t", "num"]
     for measure in measure_list:
@@ -596,8 +595,8 @@ def test_process(mode, sess,
         softmax_logit = last_logit
         final_weight = last_logit
     # Run every test independently. might have different number of keypoints
-    print('BBBBBBBBBBB')
     for idx_cur in xrange(num_sample):
+        print('BBBBBBBBBBB')
         # Use minimum kp in batch to construct the batch
         _xs = np.array(
             xs[idx_cur][:, :, :]
@@ -678,6 +677,7 @@ def test_process(mode, sess,
 
     results, pool_arg = [], []
 
+    print('CCCCCCCCCCCC')
     num_processor = int(mp.cpu_count() * 0.9)
     # num_processor = 12
 
