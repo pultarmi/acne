@@ -596,7 +596,7 @@ def test_process(mode, sess,
         final_weight = last_logit
     # Run every test independently. might have different number of keypoints
     for idx_cur in xrange(num_sample):
-        print('BBBBBBBBBBB')
+        print(idx_cur)
         # Use minimum kp in batch to construct the batch
         _xs = np.array(
             xs[idx_cur][:, :, :]
