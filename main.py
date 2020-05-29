@@ -2,6 +2,10 @@
 # Filename: main.py
 # License: LICENSES/LICENSE_UVIC_EPFL
 
+from multiprocessing import set_start_method
+set_start_method("spawn")
+from multiprocessing import get_context
+
 from __future__ import print_function
 from config import get_config, print_usage
 from data import load_data

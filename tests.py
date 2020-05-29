@@ -1,23 +1,14 @@
 # Filename: test.py
 # License: LICENSES/LICENSE_UVIC_EPFL
 
-from multiprocessing import set_start_method
-set_start_method("spawn")
-from multiprocessing import get_context
-
-import datetime
-import os
-import sys
-import time
-
+import datetime, os, sys, time, cv2
 import numpy as np
 from parse import parse
 import getpass
 
-import cv2
 from six.moves import xrange
 from transformations import quaternion_from_matrix
-from utils import loadh5, saveh5
+# from utils import loadh5, saveh5
 
 # import *SAC here
 username = getpass.getuser()
@@ -30,8 +21,7 @@ except Exception:
     pass
 
 try:
-    sys.path.insert(
-        0, "/home/{}/data/gitdata/usac-wrapper/python".format(username))
+    sys.path.insert(0, "/home/{}/data/gitdata/usac-wrapper/python".format(username))
     from wrapper_usac import usacFindEssentialMat
     print("Successfully import usac")
 except Exception:

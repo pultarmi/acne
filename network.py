@@ -483,19 +483,14 @@ class MyNetwork(object):
             try:
                 res = self.sess.run(fetch, feed_dict=feed_dict)
             except (ValueError, tf.errors.InvalidArgumentError):
-                print("Backward pass had numerical errors. "
-                      "This training batch is skipped!")
+                print("Backward pass had numerical errors. This training batch is skipped!")
                 continue
-            # Write summary and save current model
-            if b_write_summary:
-                self.summary_tr.add_summary(
-                    res["summary"], global_step=res["global_step"])
-                self.saver_cur.save(
-                    self.sess, self.save_file_cur,
-                    global_step=self.global_step,
-                    write_meta_graph=False)
-            # Validation
-            if b_validate:
+
+            if b_write_summary: # Write summary and save current model
+                self.summary_tr.add_summary(res["summary"], global_step=res["global_step"])
+                self.saver_cur.save(self.sess, self.save_file_cur, global_step=self.global_step, write_meta_graph=False)
+
+            if b_validate: # Validation
                 va_res = 0
                 cur_global_step = res["global_step"]
                 score = self.last_logit # defaul score: local attention
