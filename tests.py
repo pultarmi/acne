@@ -507,7 +507,6 @@ def test_process(mode, sess,
                  last_e_hat, last_logit, last_x_in,
                  data,
                  res_dir, config, va_res_only=False):
-    print('BBBBBBBBBBB')
     import tensorflow.compat.v1 as tf
     tf.disable_v2_behavior()
 
@@ -518,12 +517,12 @@ def test_process(mode, sess,
     if not os.path.exists(dump_test_cache_dir):
         os.makedirs(dump_test_cache_dir)
 
-    print('CCCCCCCCCCCCCCCC')
     if config.use_fundamental > 0:
         x, y, R, t, is_training, T1_in, T2_in, K1_in, K2_in = test_process_ins
     else:
         x, y, R, t, is_training = test_process_ins
 
+    print('CCCCCCCCCCCCCCCC')
     time_us = []
     time_ransac_us = []
     time_ransac = []
@@ -532,6 +531,7 @@ def test_process(mode, sess,
     inlier_ransac = []
     inlier_ransac_us = []
 
+    print('BBBBBBBBBBB')
     if mode == "test":
         print("[{}] {}: Start testing".format(config.data_tr, time.asctime()))
 
