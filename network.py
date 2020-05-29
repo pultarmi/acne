@@ -379,8 +379,7 @@ class MyNetwork(object):
         latest_checkpoint = tf.train.latest_checkpoint(self.res_dir_tr)
         b_resume = latest_checkpoint is not None
         if b_resume: # Restore network
-            print("Restoring from {}...".format(
-                self.res_dir_tr))
+            print("Restoring from {}...".format(self.res_dir_tr))
             self.saver_cur.restore( self.sess, latest_checkpoint )
             # restore number of steps so far
             step = self.sess.run(self.global_step)
