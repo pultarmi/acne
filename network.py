@@ -418,7 +418,7 @@ class MyNetwork(object):
 
         print(max_iter)
         print(step)
-        step = 0 # CHANGE CHANGE CHANGE
+        step = 1000 # CHANGE CHANGE CHANGE
         for step in trange(step, max_iter, ncols=self.config.tqdm_width):
             # Batch construction
             # Get a random training batch
