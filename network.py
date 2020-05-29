@@ -418,7 +418,7 @@ class MyNetwork(object):
         max_iter = self.config.train_iter
 
         print(max_iter)
-        print(max_iter)
+        print(step)
         for step in trange(step, max_iter, ncols=self.config.tqdm_width):
             # Batch construction
             # Get a random training batch
@@ -503,13 +503,11 @@ class MyNetwork(object):
                 if self.config.weight_opt == "sigmoid_softmax":
                     score = [self.last_logit, self.logit_softmax, self.last_weights]
 
-                print('CCCCCCCC')
-                test_process_ins = [self.x_in, self.y_in, self.R_in, self.t_in, self.is_training] 
+                test_process_ins = [self.x_in, self.y_in, self.R_in, self.t_in, self.is_training]
 
                 if self.config.use_fundamental > 0:
                     test_process_ins += [self.T1_in, self.T2_in, self.K1_in, self.K2_in]
 
-                print('DDDDDDDDD')
                 va_res, va_res_ours_ransac = test_process(
                     "valid", self.sess, cur_global_step,
                     self.summary_op, self.summary_va,
@@ -520,6 +518,7 @@ class MyNetwork(object):
                     data["valid"],
                     self.res_dir_va, self.config, True)
                 # Higher the better
+                print('CCCCCCCCCCc')
                 if va_res > best_va_res:
                     print(
                         "Saving best model with va_res = {}".format(
@@ -530,6 +529,7 @@ class MyNetwork(object):
                         ofp.write("{:e}\n".format(best_va_res))
                     # Save best model
                     self.saver_best.save(self.sess, self.save_file_best, write_meta_graph=False)
+                print('DDDDDDDDDDDDDDD')
                 if va_res_ours_ransac > best_va_res_ours_ransac:
                     print(
                         "Saving best model with va_res_ours_ransac = {}".format(
