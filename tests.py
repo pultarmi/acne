@@ -533,7 +533,6 @@ def test_process(mode, sess,
     if mode == "test":
         print("[{}] {}: Start testing".format(config.data_tr, time.asctime()))
 
-    print('BBBBBBBBBBB')
     # Unpack some references
     xs = data["xs"]
     ys = data["ys"]
@@ -553,7 +552,6 @@ def test_process(mode, sess,
     K2s = data["K2s"]
     # ratios = data["ratios"]
     # mutuals = data["mutuals"]
-    print('CCCCCCCCCCCCCCCC')
 
     # Validation
     num_sample = len(xs)
@@ -572,6 +570,7 @@ def test_process(mode, sess,
             # "ours_magsac{}".format(F_suffix),
         ]
 
+    print('CCCCCCCCCCCCCCCC')
     eval_res = {}
     measure_list = ["err_q", "err_t", "num"]
     for measure in measure_list:
@@ -597,6 +596,7 @@ def test_process(mode, sess,
         softmax_logit = last_logit
         final_weight = last_logit
     # Run every test independently. might have different number of keypoints
+    print('BBBBBBBBBBB')
     for idx_cur in xrange(num_sample):
         # Use minimum kp in batch to construct the batch
         _xs = np.array(
