@@ -55,7 +55,7 @@ import multiprocessing as mp
 
 def get_pool_result(num_processor, fun, args):
     with get_context("spawn").Pool() as pool:
-        pool = ThreadPool(num_processor)
+        # pool = ThreadPool(num_processor)
         print('BBBBBB')
         print(len(args))
         print(len(args))
