@@ -53,8 +53,10 @@ def get_pool_result(num_processor, fun, args):
     pool = ThreadPool(num_processor)
     print('BBBBBB')
     pool_res = pool.map(fun, args)
+    print('CCCCCC')
     pool.close()
     pool.join()
+    print('DDDDDDD')
     return pool_res
 
 def denorm_points(x, T):
