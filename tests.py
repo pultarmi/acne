@@ -52,6 +52,7 @@ def get_pool_result(num_processor, fun, args):
     print('AAAAA')
     pool = ThreadPool(num_processor)
     print('BBBBBB')
+    print(args)
     pool_res = pool.map(fun, args)
     print('CCCCCC')
     pool.close()
