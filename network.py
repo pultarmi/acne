@@ -479,7 +479,6 @@ class MyNetwork(object):
                 fetch["global_step"] = self.global_step
             # Run optimization
             # res = self.sess.run(fetch, feed_dict=feed_dict)
-            print('AAAAAAA')
             try:
                 res = self.sess.run(fetch, feed_dict=feed_dict)
             except (ValueError, tf.errors.InvalidArgumentError):
@@ -487,7 +486,6 @@ class MyNetwork(object):
                       "This training batch is skipped!")
                 continue
             # Write summary and save current model
-            print('BBBBBBB')
             if b_write_summary:
                 self.summary_tr.add_summary(
                     res["summary"], global_step=res["global_step"])
@@ -496,7 +494,9 @@ class MyNetwork(object):
                     global_step=self.global_step,
                     write_meta_graph=False)
             # Validation
+            print('BBBBBBB')
             if b_validate:
+                print('CCCCCCCC')
                 va_res = 0
                 cur_global_step = res["global_step"]
                 score = self.last_logit # defaul score: local attention
