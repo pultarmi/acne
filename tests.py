@@ -49,10 +49,10 @@ from multiprocessing import Pool as ThreadPool
 import multiprocessing as mp
 
 def get_pool_result(num_processor, fun, args):
-    pool = ThreadPool(num_processor)
     print('AAAAA')
-    pool_res = pool.map(fun, args)
+    pool = ThreadPool(num_processor)
     print('BBBBBB')
+    pool_res = pool.map(fun, args)
     pool.close()
     pool.join()
     return pool_res
