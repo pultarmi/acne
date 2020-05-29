@@ -44,17 +44,17 @@ import multiprocessing as mp
 
 
 def get_pool_result(num_processor, fun, args):
-    with get_context("spawn").Pool() as pool:
-        # pool = ThreadPool(num_processor)
-        print('BBBBBB')
-        print(len(args))
-        print(len(args))
-        print(len(args))
-        pool_res = pool.map(fun, args)
-        print('CCCCCC')
-        pool.close()
-        pool.join()
-        return pool_res
+    # with get_context("spawn").Pool() as pool:
+    pool = ThreadPool(num_processor)
+    print('BBBBBB')
+    print(len(args))
+    print(len(args))
+    print(len(args))
+    pool_res = pool.map(fun, args)
+    print('CCCCCC')
+    pool.close()
+    pool.join()
+    return pool_res
 
 def denorm_points(x, T):
     x = (x - np.array([T[0,2], T[1,2]])) / np.asarray([T[0,0], T[1,1]])
