@@ -341,6 +341,8 @@ class MyNetwork(object): #"""Network class """
         # self.saver_best.restore(self.sess, 'logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=50000---val_intv=10000000/model-474000.data-00000-of-00001')
         # self.saver_best.restore(self.sess, './logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=50000---val_intv=10000000/model-474000.index')
         latest_checkpoint = tf.train.latest_checkpoint(name)
+        print(latest_checkpoint)
+        print(latest_checkpoint)
         self.saver_cur.restore( self.sess, latest_checkpoint )
 
     def test_imw(self, x_in):
