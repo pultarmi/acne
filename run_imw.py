@@ -23,5 +23,5 @@ src = root + '/' + seq
 print(f'Done')
 
 cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
-print(cameras.keys())
-print(images[0])
+print(cameras[294])
+print(images[294])
