@@ -356,6 +356,10 @@ class MyNetwork(object): #"""Network class """
             self.t_in: None,  # (?, 3)
             self.is_training: True,
         }
+        fetch = {
+            "wX": self.wX,
+        }
+        res = self.sess.run(feed_dict, feed_dict=feed_dict)
 
     def train(self, data):
         """Parameters
