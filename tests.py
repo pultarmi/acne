@@ -89,7 +89,6 @@ def evaluate_R_t(R_gt, t_gt, R, t, q_gt=None):
     return err_q, err_t
 
 def eval_nondecompose(p1s, p2s, E_hat, dR, dt, scores):
-
     # Use only the top 10% in terms of score to decompose, we can probably
     # implement a better way of doing this, but this should be just fine.
     num_top = len(scores) // 10
@@ -100,7 +99,6 @@ def eval_nondecompose(p1s, p2s, E_hat, dR, dt, scores):
     p1s_good = p1s[mask]
     p2s_good = p2s[mask]
 
-    # Match types
     E_hat = E_hat.reshape(3, 3).astype(p1s.dtype)
     mask_new = None
     num_inlier = 0
@@ -123,12 +121,10 @@ def eval_nondecompose(p1s, p2s, E_hat, dR, dt, scores):
     loss_q = np.sqrt(0.5 * (1 - np.cos(err_q)))
     loss_t = np.sqrt(1.0 - np.cos(err_t)**2)
 
-    # Change mask type
     mask = mask.flatten().astype(bool)
 
     mask_updated = mask.copy()
     if mask_new is not None:
-        # Change mask type
         mask_new = mask_new.flatten().astype(bool)
         mask_updated[mask] = mask_new
 
@@ -138,7 +134,6 @@ def eval_decompose_F(p1s, p2s, dR, dt, K1, K2, mask=None, method=cv2.LMEDS, prob
     # import wrappers
     if mask is None:
         mask = np.ones((len(p1s),), dtype=bool)
-    # Change mask type
     mask = mask.flatten().astype(bool)
 
     # Mask the ones that will not be used
@@ -573,12 +568,8 @@ def test_process(mode, sess,
     # Run every test independently. might have different number of keypoints
     for idx_cur in xrange(num_sample):
         # Use minimum kp in batch to construct the batch
-        _xs = np.array(
-            xs[idx_cur][:, :, :]
-        ).reshape(1, 1, -1, 4)
-        _ys = np.array(
-            ys[idx_cur][:, :]
-        ).reshape(1, -1, 2)
+        _xs = np.array(xs[idx_cur][:, :, :]).reshape(1, 1, -1, 4)
+        _ys = np.array(ys[idx_cur][:, :]).reshape(1, -1, 2)
         _dR = np.array(Rs[idx_cur]).reshape(1, 9)
         _dt = np.array(ts[idx_cur]).reshape(1, 3)
         # Create random permutation indices
@@ -590,18 +581,10 @@ def test_process(mode, sess,
             is_training:  config.net_bn_test_is_training,
         }
         if config.use_fundamental > 0:
-            T1s_b = np.array(
-                [T1s[idx_cur]]
-            )
-            T2s_b = np.array(
-                [T2s[idx_cur]]
-            )
-            K1s_b = np.array(
-                [K1s[idx_cur]]
-            )
-            K2s_b = np.array(
-                [K2s[idx_cur]]
-            )
+            T1s_b = np.array([T1s[idx_cur]])
+            T2s_b = np.array([T2s[idx_cur]])
+            K1s_b = np.array([K1s[idx_cur]])
+            K2s_b = np.array([K2s[idx_cur]])
             feed_dict[T1_in] = T1s_b
             feed_dict[T2_in] = T2s_b
             feed_dict[K1_in] = K1s_b
@@ -643,11 +626,9 @@ def test_process(mode, sess,
         recalls += [res["recall"]]
         final_weights += [res["final_weight"]]
         if config.vis_dir != "":
-            dump_vis_file = os.path.join(
-                config.vis_dir, "precision.npy")
+            dump_vis_file = os.path.join(config.vis_dir, "precision.npy")
             np.save(dump_vis_file, np.array(precisions))
-            dump_vis_file = os.path.join(
-                config.vis_dir, "recall.npy")
+            dump_vis_file = os.path.join(config.vis_dir, "recall.npy")
             np.save(dump_vis_file, np.array(recalls))
 
     results, pool_arg = [], []
@@ -759,9 +740,7 @@ def test_process(mode, sess,
                     simple_value=func_dict[key_func](criterions_dict[key_cri])
                 )
             )
-            ofn = os.path.join(
-                txt_save_dir, "{}_{}.txt".format(key_func, key_cri)
-            )
+            ofn = os.path.join(txt_save_dir, "{}_{}.txt".format(key_func, key_cri))
             with open(ofn, "w") as ofp:
                 ofp.write("{}\n".format(
                     func_dict[key_func](criterions_dict[key_cri])))
@@ -776,11 +755,9 @@ def test_process(mode, sess,
             )
 
             # For median error
-            ofn = os.path.join(
-                txt_save_dir, "median_{}_{}.txt".format(_sub_tag, _tag))
+            ofn = os.path.join(txt_save_dir, "median_{}_{}.txt".format(_sub_tag, _tag))
             with open(ofn, "w") as ofp:
-                ofp.write("{}\n".format(
-                    np.median(eval_res[_sub_tag][_tag])))
+                ofp.write("{}\n".format(np.median(eval_res[_sub_tag][_tag])))
 
         ths = np.arange(7) * 5
         cur_err_q = np.array(eval_res["err_q"][_tag]) * 180.0 / np.pi
@@ -804,49 +781,38 @@ def test_process(mode, sess,
         for _idx_th in xrange(1, len(ths)):
             summaries += [
                 tf.Summary.Value(
-                    tag="ErrorComputation/acc_q_auc{}_{}".format(
-                        ths[_idx_th], _tag),
+                    tag="ErrorComputation/acc_q_auc{}_{}".format(ths[_idx_th], _tag),
                     simple_value=np.mean(q_acc[:_idx_th]),
                 )
             ]
             summaries += [
                 tf.Summary.Value(
-                    tag="ErrorComputation/acc_t_auc{}_{}".format(
-                        ths[_idx_th], _tag),
+                    tag="ErrorComputation/acc_t_auc{}_{}".format(ths[_idx_th], _tag),
                     simple_value=np.mean(t_acc[:_idx_th]),
                 )
             ]
             summaries += [
                 tf.Summary.Value(
-                    tag="ErrorComputation/acc_qt_auc{}_{}".format(
-                        ths[_idx_th], _tag),
+                    tag="ErrorComputation/acc_qt_auc{}_{}".format(ths[_idx_th], _tag),
                     simple_value=np.mean(qt_acc[:_idx_th]),
                 )
             ]
             # for q_auc
-            ofn = os.path.join(
-                txt_save_dir,
-                "acc_q_auc{}_{}.txt".format(ths[_idx_th], _tag))
+            ofn = os.path.join(txt_save_dir, "acc_q_auc{}_{}.txt".format(ths[_idx_th], _tag))
             with open(ofn, "w") as ofp:
                 ofp.write("{}\n".format(np.mean(q_acc[:_idx_th])))
             # for qt_auc
-            ofn = os.path.join(
-                txt_save_dir,
-                "acc_t_auc{}_{}.txt".format(ths[_idx_th], _tag))
+            ofn = os.path.join(txt_save_dir, "acc_t_auc{}_{}.txt".format(ths[_idx_th], _tag))
             with open(ofn, "w") as ofp:
                 ofp.write("{}\n".format(np.mean(t_acc[:_idx_th])))
             # for qt_auc
-            ofn = os.path.join(
-                txt_save_dir,
-                "acc_qt_auc{}_{}.txt".format(ths[_idx_th], _tag))
+            ofn = os.path.join(txt_save_dir, "acc_qt_auc{}_{}.txt".format(ths[_idx_th], _tag))
             with open(ofn, "w") as ofp:
                 ofp.write("{}\n".format(np.mean(qt_acc[:_idx_th])))
 
-    summary_writer.add_summary(
-        tf.Summary(value=summaries), global_step=cur_global_step)
+    summary_writer.add_summary(tf.Summary(value=summaries), global_step=cur_global_step)
 
     if mode == "test":
-        print("[{}] {}: End testing".format(
-            config.data_tr, time.asctime()))
+        print("[{}] {}: End testing".format(config.data_tr, time.asctime()))
     # Return qt_auc20 of ours
     return ret_val, ret_val_ours_ransac

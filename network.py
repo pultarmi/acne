@@ -16,8 +16,7 @@ from tf_utils import pre_x_in, topk
 from ops import tf_skew_symmetric 
 from tests import test_process
 
-class MyNetwork(object):
-    """Network class """
+class MyNetwork(object): #"""Network class """
     def __init__(self, config):
         self.config = config
         self._init_tensorflow()# Initialize thenosrflow session
@@ -74,13 +73,11 @@ class MyNetwork(object):
 
     def _build_model(self): # """Build our MLP network."""
         with tf.variable_scope("Matchnet", reuse=tf.AUTO_REUSE):
-            # For intermediate visualization 
-            self.fetch_vis = {}
+            self.fetch_vis = {} # For intermediate visualization
             # -------------------- Network archintecture --------------------
             from archs.cvpr2020 import build_graph # Import correct build_graph function
             print("Building Graph")
-            # Preprocessing input, currently doing nothing
-            x_in = pre_x_in(self.x_in, self.config.pre_x_in)
+            x_in = pre_x_in(self.x_in, self.config.pre_x_in) # Preprocessing input, currently doing nothing
             y_in = self.y_in
             self.fetch_vis["x_in"] = self.x_in
             self.fetch_vis["y_in"] = self.y_in
@@ -177,12 +174,10 @@ class MyNetwork(object):
             self.last_x_in = last_x_in
             self.last_weights = last_weights
     
-    def _build_loss(self, e_hat, logit, x_in, y_in, weights, name=""):
-        """Build our cross entropy loss."""
+    def _build_loss(self, e_hat, logit, x_in, y_in, weights, name=""): #"""Build our cross entropy loss."""
         with tf.variable_scope("Loss_{}".format(name), reuse=tf.AUTO_REUSE):
             x_shp = tf.shape(self.x_in)
-            # The groundtruth epi sqr
-            gt_geod_d = y_in[:, :, 0]
+            gt_geod_d = y_in[:, :, 0] # The groundtruth epi sqr
             # tf.summary.histogram("gt_geod_d", gt_geod_d)
 
             # Get groundtruth Essential matrix
@@ -236,7 +231,6 @@ class MyNetwork(object):
             self.recall = recall
 
             loss = 0
-            
             if self.config.loss_essential > 0:
                 loss += (
                     self.config.loss_essential * essential_loss * tf.to_float(
@@ -265,7 +259,6 @@ class MyNetwork(object):
                     classif_multi_logit += [classif_loss]
                 classif_multi_logit = tf.reduce_mean(tf.stack(classif_multi_logit))
                 loss += classif_multi_logit * self.config.loss_multi_logit
-
             tf.summary.scalar("loss", loss)
             return loss
 
@@ -278,8 +271,7 @@ class MyNetwork(object):
             with tf.control_dependencies(update_ops):
                 grads_and_vars = optim.compute_gradients(self.loss)
 
-                # gradient clipping
-                if max_grad_norm is not None:
+                if max_grad_norm is not None: # gradient clipping
                     new_grads_and_vars = []
                     for idx, (grad, var) in enumerate(grads_and_vars):
                         if grad is not None:
