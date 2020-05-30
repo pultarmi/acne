@@ -131,8 +131,8 @@ class MyNetwork(object): #"""Network class """
                 XwX = tf.matmul(tf.transpose(X, (0, 2, 1)), wX)
                 print("XwX shape = {}".format(XwX.shape))
 
-                self.wX = wX ############################################3333
-                return ############################################3333
+                # self.wX = wX ############################################3333
+                # return ############################################3333
 
                 # Recover essential matrix from self-adjoing eigen
                 e, v = tf.self_adjoint_eig(XwX)
