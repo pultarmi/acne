@@ -530,14 +530,11 @@ def test_process(mode, sess,
     test_list = []
     F_suffix = "_F" if config.use_fundamental>0 else ""
     if va_res_only:
-        test_list += [
-            "ours",
+        test_list += ["ours",
             # "ours_ransac{}".format(F_suffix),
         ]
     else:
-        test_list += [
-            "ours",
-            "ours_ransac{}".format(F_suffix),
+        test_list += ["ours", "ours_ransac{}".format(F_suffix),
             # "ours_magsac{}".format(F_suffix),
         ]
 

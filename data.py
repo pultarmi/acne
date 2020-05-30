@@ -255,9 +255,7 @@ def loadFromDir(train_data_dir, gt_div_str="", bUseColorImage=True,
             fx = K[0, 0]
             fy = K[1, 1]
             # New kp
-            kp += [
-                (h5_kp - np.array([[cx, cy]])) / np.asarray([[fx, fy]])
-            ]
+            kp += [(h5_kp - np.array([[cx, cy]])) / np.asarray([[fx, fy]])]
             # New desc
             desc += [h5_desc]
     print("")
