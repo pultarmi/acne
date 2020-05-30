@@ -14,6 +14,8 @@ from tf_utils import pre_x_in, topk
 from ops import tf_skew_symmetric
 from tests import test_process
 
+from colmap.scripts.python.read_write_model import read_model, qvec2rotmat
+from colmap.scripts.python.read_dense import read_array
 
 root = 'Datasets/Phototourism'
 seq = 'brandenburg_gate'
