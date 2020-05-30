@@ -360,6 +360,7 @@ class MyNetwork(object): #"""Network class """
             "wX": self.wX,
         }
         res = self.sess.run(fetch, feed_dict=feed_dict)
+        print(res)
 
     def train(self, data):
         """Parameters
