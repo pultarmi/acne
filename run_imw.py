@@ -29,7 +29,7 @@ cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
 # print(cameras[294])
 print(images[294].xys.shape)
 print(images[295].xys)
-x_in = np.cat([images[294].xys, images[294].xys])
+x_in = np.concatenate([images[294].xys, images[294].xys])
 
 mynet = MyNetwork(config)
 mynet.restore()
