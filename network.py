@@ -359,7 +359,7 @@ class MyNetwork(object): #"""Network class """
         fetch = {
             "wX": self.wX,
         }
-        res = self.sess.run(feed_dict, feed_dict=feed_dict)
+        res = self.sess.run(fetch, feed_dict=feed_dict)
 
     def train(self, data):
         """Parameters
