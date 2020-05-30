@@ -52,15 +52,15 @@ class MyNetwork(object): #"""Network class """
     def _build_placeholder(self): #"""Build placeholders."""
         # Make tensforflow placeholder
         self.x_in = tf.placeholder(tf.float32, [None, 1, None, 4], name="x_in")
-        self.y_in = tf.placeholder(tf.float32, [None, None, 2], name="y_in")
-        self.R_in = tf.placeholder(tf.float32, [None, 9], name="R_in")
-        self.t_in = tf.placeholder(tf.float32, [None, 3], name="t_in")
-        self.is_training = tf.placeholder(tf.bool, (), name="is_training")
-        # Input uncalibration and normalization parameters
-        self.T1_in = tf.placeholder(tf.float32, [None, 3, 3], name="T1_in") # norm mat
-        self.T2_in = tf.placeholder(tf.float32, [None, 3, 3], name="T2_in") # norm mat
-        self.K1_in = tf.placeholder(tf.float32, [None, 3, 3], name="K1_in") # calib mat
-        self.K2_in = tf.placeholder(tf.float32, [None, 3, 3], name="K2_in") # calib mat
+        # self.y_in = tf.placeholder(tf.float32, [None, None, 2], name="y_in")
+        # self.R_in = tf.placeholder(tf.float32, [None, 9], name="R_in")
+        # self.t_in = tf.placeholder(tf.float32, [None, 3], name="t_in")
+        # self.is_training = tf.placeholder(tf.bool, (), name="is_training")
+        # # Input uncalibration and normalization parameters
+        # self.T1_in = tf.placeholder(tf.float32, [None, 3, 3], name="T1_in") # norm mat
+        # self.T2_in = tf.placeholder(tf.float32, [None, 3, 3], name="T2_in") # norm mat
+        # self.K1_in = tf.placeholder(tf.float32, [None, 3, 3], name="K1_in") # calib mat
+        # self.K2_in = tf.placeholder(tf.float32, [None, 3, 3], name="K2_in") # calib mat
 
         # Global step for optimization
         self.global_step = tf.get_variable(
