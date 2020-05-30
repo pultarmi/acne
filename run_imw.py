@@ -22,5 +22,5 @@ seq = 'brandenburg_gate'
 src = root + '/' + seq
 print(f'Done')
 
-
 cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
+print(cameras)
