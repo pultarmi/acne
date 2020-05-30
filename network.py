@@ -421,6 +421,7 @@ class MyNetwork(object): #"""Network class """
                 self.t_in: ts_b,
                 self.is_training: True,
             }
+            print(feed_dict)
             if self.config.use_fundamental > 0:
                 feed_dict[self.T1_in] = T1s_b
                 feed_dict[self.T2_in] = T2s_b
