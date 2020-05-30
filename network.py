@@ -28,6 +28,7 @@ class MyNetwork(object): #"""Network class """
         # self._build_optim()
         # self._build_summary()
         # self._build_writer()
+        self.saver_best = tf.train.Saver()
 
     def _init_tensorflow(self):
         # limit CPU threads with OMP_NUM_THREADS
