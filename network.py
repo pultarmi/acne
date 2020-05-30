@@ -26,6 +26,7 @@ class MyNetwork(object): #"""Network class """
         self._build_model()
         # self._build_loss()
         self.saver_best = tf.train.Saver()
+        self.saver_cur = tf.train.Saver()
         # self._build_optim()
         # self._build_summary()
         # self._build_writer()
@@ -323,7 +324,6 @@ class MyNetwork(object): #"""Network class """
             self.summary_te = tf.summary.FileWriter(os.path.join(self.res_dir_te, "test", "logs"))
 
         # Create savers (one for current, one for best)
-        self.saver_cur = tf.train.Saver()
         # self.saver_best = tf.train.Saver()
         # Save file for the current model
         self.save_file_cur = os.path.join(self.res_dir_tr, "model")
