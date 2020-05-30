@@ -40,7 +40,6 @@ def dump_data_pair(args):
     dump_file_mutual_ratio = os.path.join(
         dump_dir, "mutual_ratio-{}-{}.h5".format(ii, jj))
 
-
     if not os.path.exists(dump_file) or not os.path.exists(dump_file_mutual_ratio):
     # if 1==1:
         # Load descriptors for ii
@@ -87,10 +86,7 @@ def dump_data_pair(args):
         if not os.path.exists(dump_file_mutual_ratio):
             saveh5(dump_dict_mutual_ratio, dump_file_mutual_ratio)
 
-
-def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,
-            cur_folder):
-
+def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,cur_folder):
     xs = []
     ys = []
     Rs = []
@@ -140,9 +136,7 @@ def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,
                     # Correct focals
                     fx = parse_geom(geom, geom_type)["K"][i, 0, 0]
                     fy = parse_geom(geom, geom_type)["K"][i, 1, 1]
-                    kp[i] = (
-                        xy - np.array([[cx, cy]])
-                    ) / np.asarray([[fx, fy]])
+                    kp[i] = (xy - np.array([[cx, cy]])) / np.asarray([[fx, fy]])
                     desc[i] = cv_desc
                 if z[i] is None:
                     cx = (img[i][0].shape[1] - 1.0) * 0.5
@@ -264,7 +258,6 @@ def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,
             dump_dir, "mutual_ratio-{}-{}.h5".format(ii, jj)))["ratio"]
         mutuals += [mutual]
         ratios += [ratio]
-        
 
         # Move back to tuples
         idx_sort = (idx_sort[0], idx_sort[1])
@@ -485,9 +478,5 @@ for _set in ["train", "valid", "test"]:
         if not os.path.exists(ready_file_mutual_ratio):
             with open(ready_file_mutual_ratio, "w") as ofp:
                 ofp.write("mutual and ratio is ready\n")
-
     else:
         print("Done!")
-
-#
-# dump_data.py ends here

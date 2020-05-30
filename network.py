@@ -129,8 +129,7 @@ class MyNetwork(object):
                     raise ValueError("Don't support it")
 
                 # Make input data (num_img_pair x num_corr x 4)
-                xx = tf.transpose(tf.reshape(
-                    x_in, (x_shp[0], x_shp[2], 4)), (0, 2, 1))
+                xx = tf.transpose(tf.reshape(x_in, (x_shp[0], x_shp[2], 4)), (0, 2, 1))
 
                 # Create the matrix to be used for the eight-point algorithm
                 X = tf.transpose(tf.stack([
@@ -152,10 +151,8 @@ class MyNetwork(object):
                 if self.config.use_fundamental > 0:
                     # Go back Essential Matrix with input norm and calibration matrix
                     e_hat = tf.reshape(e_hat, (x_shp[0], 3, 3)) 
-                    e_hat = tf.matmul(
-                        tf.matmul(tf.transpose(self.T2_in, (0, 2, 1)), e_hat), self.T1_in)
-                    e_hat = tf.matmul(
-                        tf.matmul(tf.transpose(self.K2_in, (0, 2, 1)), e_hat), self.K1_in)
+                    e_hat = tf.matmul(tf.matmul(tf.transpose(self.T2_in, (0, 2, 1)), e_hat), self.T1_in)
+                    e_hat = tf.matmul(tf.matmul(tf.transpose(self.K2_in, (0, 2, 1)), e_hat), self.K1_in)
                     e_hat = tf.reshape(e_hat, (x_shp[0], 9))
 
                 e_hat /= tf.norm(e_hat, axis=1, keep_dims=True)
@@ -283,8 +280,7 @@ class MyNetwork(object):
             tf.summary.scalar("loss", loss)
             return loss
 
-    def _build_optim(self):
-        """Build optimizer related ops and vars."""
+    def _build_optim(self): #"""Build optimizer related ops and vars."""
         with tf.variable_scope("Optimization", reuse=tf.AUTO_REUSE):
             learning_rate = self.config.train_lr
             max_grad_norm = None
@@ -306,27 +302,21 @@ class MyNetwork(object):
                 new_grads_and_vars = []
                 for idx, (grad, var) in enumerate(grads_and_vars):
                     if grad is not None:
-                        grad = tf.check_numerics(
-                            grad, "Numerical error in gradient for {}"
-                            "".format(var.name))
+                        grad = tf.check_numerics(grad, "Numerical error in gradient for {}".format(var.name))
                     new_grads_and_vars.append((grad, var))
 
                 # Should only apply grads once they are safe
-                self.optim = optim.apply_gradients(
-                    new_grads_and_vars, global_step=self.global_step)
+                self.optim = optim.apply_gradients(new_grads_and_vars, global_step=self.global_step)
 
             # # Summarize all gradients
             # for grad, var in grads_and_vars:
             #     if grad is not None:
             #         tf.summary.histogram(var.name + '/gradient', grad)
 
-    def _build_summary(self):
-        """Build summary ops."""
-        # Merge all summary op
+    def _build_summary(self): #"""Build summary ops.""" # Merge all summary op
         self.summary_op = tf.summary.merge_all()
 
-    def _build_writer(self):
-        """Build the writers and savers"""
+    def _build_writer(self): #"""Build the writers and savers"""
         # Create suffix automatically if not provided
         suffix_tr = self.config.log_dir
         if suffix_tr == "":
@@ -361,18 +351,11 @@ class MyNetwork(object):
         self.va_res_file_ours_ransac = os.path.join(self.res_dir_va, "valid", "va_res_ours_ransac.txt")
 
     def train(self, data):
-        """Training function.
-        Parameters
-        ----------
-        data_tr : tuple
-            Training data.
-        data_va : tuple
-            Validation data.
-        x_va : ndarray
-            Validation data.
-        y_va : ndarray
-            Validation labels."""
-
+        """Parameters
+        data_tr : tuple Training data.
+        data_va : tuple Validation data.
+        x_va : ndarray Validation data.
+        y_va : ndarray Validation labels."""
         print("Initializing...")
         self.sess.run(tf.global_variables_initializer())
         # Resume data if it already exists
@@ -399,11 +382,10 @@ class MyNetwork(object):
             step = 0
             best_va_res = -1
             best_va_res_ours_ransac = -1
-        # ----------------------------------------
+
         if self.config.data_name.startswith("oan"):
             data_loader = iter(data["train"])
-        else: 
-            # Unpack some data for simple coding
+        else: # Unpack some data for simple coding
             xs_tr = data["train"]["xs"]
             ys_tr = data["train"]["ys"]
             Rs_tr = data["train"]["Rs"]
@@ -512,35 +494,23 @@ class MyNetwork(object):
                     self.last_e_hat, score, self.last_x_in,
                     data["valid"],
                     self.res_dir_va, self.config, True)
-                # Higher the better
-                if va_res > best_va_res:
-                    print(
-                        "Saving best model with va_res = {}".format(
-                            va_res))
+                if va_res > best_va_res: # Higher the better
+                    print("Saving best model with va_res = {}".format(va_res))
                     best_va_res = va_res
-                    # Save best validation result
-                    with open(self.va_res_file, "w") as ofp:
+                    with open(self.va_res_file, "w") as ofp: # Save best validation result
                         ofp.write("{:e}\n".format(best_va_res))
-                    # Save best model
-                    self.saver_best.save(self.sess, self.save_file_best, write_meta_graph=False)
+                    self.saver_best.save(self.sess, self.save_file_best, write_meta_graph=False) # Save best model
                 if va_res_ours_ransac > best_va_res_ours_ransac:
-                    print(
-                        "Saving best model with va_res_ours_ransac = {}".format(
-                            va_res_ours_ransac))
+                    print("Saving best model with va_res_ours_ransac = {}".format(va_res_ours_ransac))
                     best_va_res_ours_ransac = va_res_ours_ransac
-                    # Save best validation result
-                    with open(self.va_res_file_ours_ransac, "w") as ofp:
+                    with open(self.va_res_file_ours_ransac, "w") as ofp: # Save best validation result
                         ofp.write("{:e}\n".format(best_va_res_ours_ransac))
-                    # Save best model
-                    self.saver_best.save(self.sess, self.save_file_best_ours_ransac,write_meta_graph=False)
+                    self.saver_best.save(self.sess, self.save_file_best_ours_ransac,write_meta_graph=False) # Save best model
 
     def test(self, data):
-        """Test routine"""
-        # Check if model exists
-        if not os.path.exists(self.save_file_best + ".index"):
+        if not os.path.exists(self.save_file_best + ".index"): # Check if model exists
             print("Model File {} does not exist! Quiting".format(self.save_file_best))
             exit(1)
-
         # Restore model
         print("Restoring from {}...".format(self.save_file_best))
         self.saver_best.restore(self.sess, self.save_file_best)
