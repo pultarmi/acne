@@ -332,8 +332,7 @@ class MyNetwork(object): #"""Network class """
 
         # Other savers
         self.va_res_file = os.path.join(self.res_dir_va, "valid", "va_res.txt")
-        self.va_res_file_ours_ransac = os.path.join(self.res_dir_va, "valid", "va_res_ours_ransac.txt")
-
+        self.va_res_file_ours_ransac = os.path.join(self.res_dir_va, "valid", "va_res_ours_ransac.`txt")
 
     def restore(self):
         print("Restoring from {}...".format(self.save_file_best))

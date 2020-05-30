@@ -26,8 +26,8 @@ print(f'Done')
 
 cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
 # print(cameras[294])
-print(images[294])
-print(images[295])
+print(images[294].xys)
+print(images[295].xys)
 
 mynet = MyNetwork(config)
 mynet.restore()
