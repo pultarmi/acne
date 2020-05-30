@@ -341,8 +341,8 @@ class MyNetwork(object): #"""Network class """
         self.saver_best.restore(self.sess, './logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=50000---val_intv=10000000/model')
 
     def test_imw(self, x_in):
-        print("Restoring from {}...".format(self.save_file_best))
-        self.saver_best.restore(self.sess, self.save_file_best)
+        # print("Restoring from {}...".format(self.save_file_best))
+        # self.saver_best.restore(self.sess, self.save_file_best)
         feed_dict = {
             self.x_in: x_in,  # (?, 1, ?, 4)
             self.y_in: None,  # (?, ?, 2)
