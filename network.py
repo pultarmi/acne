@@ -20,8 +20,7 @@ class MyNetwork(object):
     """Network class """
     def __init__(self, config):
         self.config = config
-        # Initialize thenosrflow session
-        self._init_tensorflow()
+        self._init_tensorflow()# Initialize thenosrflow session
         # Build the network
         self._build_placeholder()
         self._build_preprocessing()
@@ -30,11 +29,6 @@ class MyNetwork(object):
         self._build_optim()
         self._build_summary()
         self._build_writer()
-
-    # print('LOADING')
-    # print('LOADING')
-    # print('LOADING')
-    # tf.keras.models.load_model('logs_pre/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---loss_multi_logit=1---use_fundamental=2---data_name=oan_indoor/models-best.data-00000-of-00001')
 
     def _init_tensorflow(self):
         # limit CPU threads with OMP_NUM_THREADS
@@ -48,15 +42,14 @@ class MyNetwork(object):
                 inter_op_parallelism_threads=num_threads,
             )
         else:
-            # tfconfig = tf.ConfigProto()
-            tfconfig = tf.compat.v1.ConfigProto()
+            tfconfig = tf.ConfigProto()
+            # tfconfig = tf.compat.v1.ConfigProto()
 
         tfconfig.gpu_options.allow_growth = True
-        # self.sess = tf.Session(config=tfconfig)
-        self.sess = tf.compat.v1.Session(config=tfconfig)
+        self.sess = tf.Session(config=tfconfig)
+        # self.sess = tf.compat.v1.Session(config=tfconfig)
 
-    def _build_placeholder(self):
-        """Build placeholders."""
+    def _build_placeholder(self): #"""Build placeholders."""
         # Make tensforflow placeholder
         self.x_in = tf.placeholder(tf.float32, [None, 1, None, 4], name="x_in")
         self.y_in = tf.placeholder(tf.float32, [None, None, 2], name="y_in")
@@ -76,19 +69,15 @@ class MyNetwork(object):
             dtype=tf.int64,
             trainable=False)
 
-    def _build_preprocessing(self):
-        """Build preprocessing related graph."""
-        # For now, do nothing
-        pass
+    def _build_preprocessing(self): #"""Build preprocessing related graph."""
+        pass # For now, do nothing
 
-    def _build_model(self):
-        """Build our MLP network."""
+    def _build_model(self): # """Build our MLP network."""
         with tf.variable_scope("Matchnet", reuse=tf.AUTO_REUSE):
             # For intermediate visualization 
             self.fetch_vis = {}
             # -------------------- Network archintecture --------------------
-            # Import correct build_graph function
-            from archs.cvpr2020 import build_graph
+            from archs.cvpr2020 import build_graph # Import correct build_graph function
             print("Building Graph")
             # Preprocessing input, currently doing nothing
             x_in = pre_x_in(self.x_in, self.config.pre_x_in)
@@ -364,10 +353,8 @@ class MyNetwork(object):
         if b_resume: # Restore network
             print("Restoring from {}...".format(self.res_dir_tr))
             self.saver_cur.restore( self.sess, latest_checkpoint )
-            # restore number of steps so far
-            step = self.sess.run(self.global_step)
-            # restore best validation result
-            if os.path.exists(self.va_res_file):
+            step = self.sess.run(self.global_step) # restore number of steps so far
+            if os.path.exists(self.va_res_file): # restore best validation result
                 with open(self.va_res_file, "r") as ifp:
                     dump_res = ifp.read()
                 dump_res = parse("{best_va_res:e}\n", dump_res)
@@ -442,13 +429,11 @@ class MyNetwork(object):
                 self.t_in: ts_b,
                 self.is_training: True,
             }
-            # add use_fundamental
             if self.config.use_fundamental > 0:
                 feed_dict[self.T1_in] = T1s_b
                 feed_dict[self.T2_in] = T2s_b
                 feed_dict[self.K1_in] = K1s_b
                 feed_dict[self.K2_in] = K2s_b
-            # Fetch
             fetch = {
                 "optim": self.optim,
                 "loss": self.loss,
@@ -461,9 +446,7 @@ class MyNetwork(object):
             if b_write_summary or b_validate:
                 fetch["summary"] = self.summary_op
                 fetch["global_step"] = self.global_step
-            # Run optimization
-            # res = self.sess.run(fetch, feed_dict=feed_dict)
-            try:
+            try: # Run optimization
                 res = self.sess.run(fetch, feed_dict=feed_dict)
             except (ValueError, tf.errors.InvalidArgumentError):
                 print("Backward pass had numerical errors. This training batch is skipped!")
