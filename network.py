@@ -26,9 +26,9 @@ class MyNetwork(object): #"""Network class """
         self._build_model()
         self.saver_best = tf.train.Saver()
         self.saver_cur = tf.train.Saver()
-        self._build_optim()
-        self._build_summary()
-        self._build_writer()
+        # self._build_optim()
+        # self._build_summary()
+        # self._build_writer()
 
     def _init_tensorflow(self):
         # limit CPU threads with OMP_NUM_THREADS
@@ -131,8 +131,8 @@ class MyNetwork(object): #"""Network class """
                 XwX = tf.matmul(tf.transpose(X, (0, 2, 1)), wX)
                 print("XwX shape = {}".format(XwX.shape))
 
-                # self.wX = wX ############################################3333
-                # return ############################################3333
+                self.wX = wX ############################################3333
+                return ############################################3333
 
                 # Recover essential matrix from self-adjoing eigen
                 e, v = tf.self_adjoint_eig(XwX)
