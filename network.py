@@ -351,9 +351,9 @@ class MyNetwork(object): #"""Network class """
         # self.saver_best.restore(self.sess, self.save_file_best)
         feed_dict = {
             self.x_in: x_in,  # (?, 1, ?, 4)
-            self.y_in: None,  # (?, ?, 2)
-            self.R_in: None,  # (?, 9)
-            self.t_in: None,  # (?, 3)
+            # self.y_in: None,  # (?, ?, 2)
+            # self.R_in: None,  # (?, 9)
+            # self.t_in: None,  # (?, 3)
             self.is_training: True,
         }
         fetch = {
