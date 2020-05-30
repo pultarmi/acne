@@ -130,6 +130,9 @@ class MyNetwork(object): #"""Network class """
                 XwX = tf.matmul(tf.transpose(X, (0, 2, 1)), wX)
                 print("XwX shape = {}".format(XwX.shape))
 
+                self.wX = wX ############################################3333
+                return ############################################3333
+
                 # Recover essential matrix from self-adjoing eigen
                 e, v = tf.self_adjoint_eig(XwX)
                 e_hat = tf.reshape(v[:, :, 0], (x_shp[0], 9))
@@ -331,6 +334,22 @@ class MyNetwork(object): #"""Network class """
         self.va_res_file = os.path.join(self.res_dir_va, "valid", "va_res.txt")
         self.va_res_file_ours_ransac = os.path.join(self.res_dir_va, "valid", "va_res_ours_ransac.txt")
 
+
+    def restore(self):
+        print("Restoring from {}...".format(self.save_file_best))
+        self.saver_best.restore(self.sess, self.save_file_best)
+
+    def test_imw(self, x_in):
+        print("Restoring from {}...".format(self.save_file_best))
+        self.saver_best.restore(self.sess, self.save_file_best)
+        feed_dict = {
+            self.x_in: x_in,  # (?, 1, ?, 4)
+            self.y_in: None,  # (?, ?, 2)
+            self.R_in: None,  # (?, 9)
+            self.t_in: None,  # (?, 3)
+            self.is_training: True,
+        }
+
     def train(self, data):
         """Parameters
         data_tr : tuple Training data.
@@ -415,13 +434,13 @@ class MyNetwork(object): #"""Network class """
                     K2s_b = np.array([K2s_tr[_i] for _i in ind_cur])
             # Train
             feed_dict = {
-                self.x_in: xs_b,
-                self.y_in: ys_b,
-                self.R_in: Rs_b,
-                self.t_in: ts_b,
+                self.x_in: xs_b, # (?, 1, ?, 4)
+                self.y_in: ys_b, # (?, ?, 2)
+                self.R_in: Rs_b, # (?, 9)
+                self.t_in: ts_b, # (?, 3)
                 self.is_training: True,
             }
-            print(feed_dict)
+            # print(feed_dict)
             if self.config.use_fundamental > 0:
                 feed_dict[self.T1_in] = T1s_b
                 feed_dict[self.T2_in] = T2s_b
