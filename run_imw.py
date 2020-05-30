@@ -14,6 +14,7 @@ import itertools
 from tf_utils import pre_x_in, topk
 from ops import tf_skew_symmetric
 from tests import test_process
+from config import get_config, print_usage
 config, unparsed = get_config()
 
 from read_write_model import read_model, qvec2rotmat
