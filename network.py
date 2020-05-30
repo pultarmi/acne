@@ -55,7 +55,7 @@ class MyNetwork(object): #"""Network class """
         # self.y_in = tf.placeholder(tf.float32, [None, None, 2], name="y_in")
         # self.R_in = tf.placeholder(tf.float32, [None, 9], name="R_in")
         # self.t_in = tf.placeholder(tf.float32, [None, 3], name="t_in")
-        # self.is_training = tf.placeholder(tf.bool, (), name="is_training")
+        self.is_training = tf.placeholder(tf.bool, (), name="is_training")
         # # Input uncalibration and normalization parameters
         # self.T1_in = tf.placeholder(tf.float32, [None, 3, 3], name="T1_in") # norm mat
         # self.T2_in = tf.placeholder(tf.float32, [None, 3, 3], name="T2_in") # norm mat
