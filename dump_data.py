@@ -261,6 +261,7 @@ def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,cur
 
         # make xs in NHWC
         xs += [np.concatenate([x1, x2], axis=1).T.reshape(4, 1, -1).transpose((1, 2, 0))]
+        print(xs[0])
 
         # Get the geodesic distance using with x1, x2, dR, dt
         if config.obj_geod_type == "sampson":
