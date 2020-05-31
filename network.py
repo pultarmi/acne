@@ -404,7 +404,6 @@ class MyNetwork(object): #"""Network class """
             T2s_tr = data["train"]["T2s"]
             K1s_tr = data["train"]["K1s"]
             K2s_tr = data["train"]["K2s"]
-        print(xs_tr)
         # The training loop
         batch_size = self.config.train_batch_size
         max_iter = self.config.train_iter
@@ -422,7 +421,8 @@ class MyNetwork(object): #"""Network class """
                     data_loader = iter(data["train"])
                     data_dict = next(data_loader)
             
-                xs_b = data_dict["xs"] 
+                xs_b = data_dict["xs"]
+                print(xs_b)
                 ys_b = data_dict["ys"]
                 Rs_b = data_dict["Rs"].reshape(-1, 9)
                 ts_b = data_dict["ts"].reshape(-1, 3)
