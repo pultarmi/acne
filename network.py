@@ -26,9 +26,9 @@ class MyNetwork(object): #"""Network class """
         self._build_model()
         self.saver_best = tf.train.Saver()
         self.saver_cur = tf.train.Saver()
-        # self._build_optim()
-        # self._build_summary()
-        # self._build_writer()
+        self._build_optim()
+        self._build_summary()
+        self._build_writer()
 
     def _init_tensorflow(self):
         # limit CPU threads with OMP_NUM_THREADS
@@ -52,15 +52,15 @@ class MyNetwork(object): #"""Network class """
     def _build_placeholder(self): #"""Build placeholders."""
         # Make tensforflow placeholder
         self.x_in = tf.placeholder(tf.float32, [None, 1, None, 4], name="x_in")
-        # self.y_in = tf.placeholder(tf.float32, [None, None, 2], name="y_in")
-        # self.R_in = tf.placeholder(tf.float32, [None, 9], name="R_in")
-        # self.t_in = tf.placeholder(tf.float32, [None, 3], name="t_in")
+        self.y_in = tf.placeholder(tf.float32, [None, None, 2], name="y_in")
+        self.R_in = tf.placeholder(tf.float32, [None, 9], name="R_in")
+        self.t_in = tf.placeholder(tf.float32, [None, 3], name="t_in")
         self.is_training = tf.placeholder(tf.bool, (), name="is_training")
         # # Input uncalibration and normalization parameters
-        # self.T1_in = tf.placeholder(tf.float32, [None, 3, 3], name="T1_in") # norm mat
-        # self.T2_in = tf.placeholder(tf.float32, [None, 3, 3], name="T2_in") # norm mat
-        # self.K1_in = tf.placeholder(tf.float32, [None, 3, 3], name="K1_in") # calib mat
-        # self.K2_in = tf.placeholder(tf.float32, [None, 3, 3], name="K2_in") # calib mat
+        self.T1_in = tf.placeholder(tf.float32, [None, 3, 3], name="T1_in") # norm mat
+        self.T2_in = tf.placeholder(tf.float32, [None, 3, 3], name="T2_in") # norm mat
+        self.K1_in = tf.placeholder(tf.float32, [None, 3, 3], name="K1_in") # calib mat
+        self.K2_in = tf.placeholder(tf.float32, [None, 3, 3], name="K2_in") # calib mat
 
         # Global step for optimization
         self.global_step = tf.get_variable(
@@ -131,8 +131,8 @@ class MyNetwork(object): #"""Network class """
                 XwX = tf.matmul(tf.transpose(X, (0, 2, 1)), wX)
                 print("XwX shape = {}".format(XwX.shape))
 
-                self.wX = wX ############################################3333
-                return ############################################3333
+                # self.wX = wX ############################################3333
+                # return ############################################3333
 
                 # Recover essential matrix from self-adjoing eigen
                 e, v = tf.self_adjoint_eig(XwX)
