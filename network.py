@@ -445,6 +445,7 @@ class MyNetwork(object): #"""Network class """
                     K1s_b = np.array([K1s_tr[_i] for _i in ind_cur])
                     K2s_b = np.array([K2s_tr[_i] for _i in ind_cur])
             # Train
+            print(xs_b)
             feed_dict = {
                 self.x_in: xs_b, # (?, 1, ?, 4)
                 self.y_in: ys_b, # (?, ?, 2)
