@@ -79,9 +79,9 @@ class MyNetwork(object): #"""Network class """
             from archs.cvpr2020 import build_graph # Import correct build_graph function
             print("Building Graph")
             x_in = pre_x_in(self.x_in, self.config.pre_x_in) # Preprocessing input, currently doing nothing
-            # y_in = self.y_in
+            y_in = self.y_in
             self.fetch_vis["x_in"] = self.x_in
-            # self.fetch_vis["y_in"] = self.y_in
+            self.fetch_vis["y_in"] = self.y_in
 
             logits = []
             indexs = []
