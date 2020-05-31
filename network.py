@@ -354,7 +354,7 @@ class MyNetwork(object): #"""Network class """
             # self.y_in: None,  # (?, ?, 2)
             # self.R_in: None,  # (?, 9)
             # self.t_in: None,  # (?, 3)
-            self.is_training: True,
+            self.is_training: False,
         }
         fetch = {
             "wX": self.wX,
