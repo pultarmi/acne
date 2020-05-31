@@ -2,16 +2,13 @@
 # Filename: dump_data.py
 # License: LICENSES/LICENSE_UVIC_EPFL
 
-
 from __future__ import print_function
-
 import itertools
 import multiprocessing as mp
 import os
 import pickle
 import sys
 import time
-
 import numpy as np
 
 import cv2
@@ -27,7 +24,6 @@ config = None
 
 config, unparsed = get_config()
 
-
 def dump_data_pair(args):
     dump_dir, idx, ii, jj, queue = args
 
@@ -35,18 +31,14 @@ def dump_data_pair(args):
     if queue is not None:
         queue.put(idx)
 
-    dump_file = os.path.join(
-        dump_dir, "idx_sort-{}-{}.h5".format(ii, jj))
-    dump_file_mutual_ratio = os.path.join(
-        dump_dir, "mutual_ratio-{}-{}.h5".format(ii, jj))
+    dump_file = os.path.join(dump_dir, "idx_sort-{}-{}.h5".format(ii, jj))
+    dump_file_mutual_ratio = os.path.join(dump_dir, "mutual_ratio-{}-{}.h5".format(ii, jj))
 
     if not os.path.exists(dump_file) or not os.path.exists(dump_file_mutual_ratio):
     # if 1==1:
         # Load descriptors for ii
-        desc_ii = loadh5(
-            os.path.join(dump_dir, "kp-z-desc-{}.h5".format(ii)))["desc"]
-        desc_jj = loadh5(
-            os.path.join(dump_dir, "kp-z-desc-{}.h5".format(jj)))["desc"]
+        desc_ii = loadh5(os.path.join(dump_dir, "kp-z-desc-{}.h5".format(ii)))["desc"]
+        desc_jj = loadh5(os.path.join(dump_dir, "kp-z-desc-{}.h5".format(jj)))["desc"]
         # compute decriptor distance matrix
         # distmat = np.sqrt(
         #     np.sum(
@@ -109,15 +101,11 @@ def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,cur
 
     # randomly suffle the pairs and select num_sample amount
     np.random.seed(1234)
-    cur_pairs = [
-        pairs[_i] for _i in np.random.permutation(len(pairs))[:num_sample]
-    ]
+    cur_pairs = [pairs[_i] for _i in np.random.permutation(len(pairs))[:num_sample]]
     idx = 0
     for ii, jj in cur_pairs:
         idx += 1
-        print(
-            "\rExtracting keypoints {} / {}".format(idx, len(cur_pairs)),
-            end="")
+        print("\rExtracting keypoints {} / {}".format(idx, len(cur_pairs)), end="")
         sys.stdout.flush()
 
         # Check and extract keypoints if necessary
@@ -125,8 +113,7 @@ def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,cur
             dump_file = os.path.join(dump_dir, "kp-z-desc-{}.h5".format(i))
             if not os.path.exists(dump_file):
                 if kp[i] is None:
-                    cv_kp, cv_desc = sift.detectAndCompute(img[i].transpose(
-                        1, 2, 0), None)
+                    cv_kp, cv_desc = sift.detectAndCompute(img[i].transpose(1, 2, 0), None)
                     cx = (img[i][0].shape[1] - 1.0) * 0.5
                     cy = (img[i][0].shape[0] - 1.0) * 0.5
                     # Correct coordinates using K
@@ -182,10 +169,10 @@ def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,cur
 
     for idx_arg in xrange(len(pool_arg)):
         pool_arg[idx_arg] = pool_arg[idx_arg] + (queue,)
-    # map async
+
     pool_res = pool.map_async(dump_data_pair, pool_arg)
-    # monitor loop
-    while True:
+
+    while True: # monitor loop
         if pool_res.ready():
             break
         else:
@@ -268,21 +255,13 @@ def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,cur
         x2mat = x2mat[idx_sort]
         y2mat = y2mat[idx_sort]
         # Turn into x1, x1p, x2
-        x1 = np.concatenate(
-            [x1mat.reshape(-1, 1), y1mat.reshape(-1, 1)], axis=1)
-        x1p = np.concatenate(
-            [x1pmat.reshape(-1, 1),
-             y1pmat.reshape(-1, 1)], axis=1)
-        x2 = np.concatenate(
-            [x2mat.reshape(-1, 1), y2mat.reshape(-1, 1)], axis=1)
+        x1 = np.concatenate([x1mat.reshape(-1, 1), y1mat.reshape(-1, 1)], axis=1)
+        x1p = np.concatenate([x1pmat.reshape(-1, 1), y1pmat.reshape(-1, 1)], axis=1)
+        x2 = np.concatenate([x2mat.reshape(-1, 1), y2mat.reshape(-1, 1)], axis=1)
 
         # make xs in NHWC
-        xs += [
-            np.concatenate([x1, x2], axis=1).T.reshape(4, 1, -1).transpose(
-                (1, 2, 0))
-        ]
+        xs += [np.concatenate([x1, x2], axis=1).T.reshape(4, 1, -1).transpose((1, 2, 0))]
 
-        # ------------------------------
         # Get the geodesic distance using with x1, x2, dR, dt
         if config.obj_geod_type == "sampson":
             geod_d = get_sampsons(x1, x2, dR, dt)
@@ -363,9 +342,7 @@ def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,cur
     res_dict["mutuals"] = mutuals
     res_dict["ratios"] = ratios 
     res_dict["pairs"] = cur_pairs
-
     return res_dict
-
 
 print("-------------------------DUMP-------------------------")
 print("Note: dump_data.py will only work on the first dataset")
