@@ -205,7 +205,7 @@ def make_xy(num_sample, pairs, kp, z, desc, img, geom, vis, depth, geom_type,cur
         # ------------------------------
         # Get sift points for the first image
         x1 = kp[ii]
-        print(x1)
+        # print(x1)
         y1 = np.concatenate([kp[ii] * z[ii], z[ii]], axis=1)
         # Project the first points into the second image
         y1p = np.matmul(dR[None], y1[..., None]) + dt[None]
