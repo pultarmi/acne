@@ -6,6 +6,7 @@ import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 from network import MyNetwork
 from PIL import Image
+import h5py
 
 from parse import parse
 from tqdm import trange
@@ -23,13 +24,18 @@ from read_write_model import read_model, qvec2rotmat
 from read_dense import read_array
 
 path = 'IMW/sacre_coeur/Images'
+path_ks = 'IMW/sacre_coeur/Images/keypoints.h5'
+
+all_ks = h5py.File('keypoints.h5')
 
 # https://github.com/vcg-uvic/image-matching-benchmark/blob/master/example/training_data/parse_data.ipynb?fbclid=IwAR2prxKGOvm5mJPdjzH8XHEMR3oiE0IV9KgtshTK3lCyty-g3DjhFp9wGx8
 
 paths = sorted(glob(os.path.join(path, '*')))
 for p in paths:
     img = Image.open(p)
-
+    name = os.path.splitext(p)[0]
+    kps = all_ks[name]
+    print(kps)
     # cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
     # print(cameras[294])
     # print(images[294].xys.shape)
