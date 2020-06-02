@@ -34,11 +34,11 @@ paths = sorted(glob(os.path.join(path, '*')))
 for p in paths:
     img = Image.open(p)
     name = os.path.splitext(p)[0]
-    print('yuugugyguyuyu')
-    print('yuugugyguyuyu')
-    print('yuugugyguyuyu')
-    print(all_ks.items())
-    kps = all_ks[name]
+    # print('yuugugyguyuyu')
+    # print('yuugugyguyuyu')
+    # print('yuugugyguyuyu')
+    # print(all_ks.items())
+    kps = all_ks.get(name)
     print(kps)
     # cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
     # print(cameras[294])
