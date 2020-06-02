@@ -48,6 +48,8 @@ def get_kps(p):
 mynet = MyNetwork(config)
 mynet.restore()
 
+topnum = 1000
+
 paths = sorted(glob(os.path.join(path, '*')))
 for i,p1 in tqdm(enumerate(paths)):
     for p2 in paths[i+1:]:
@@ -65,8 +67,9 @@ for i,p1 in tqdm(enumerate(paths)):
         x_in = np.expand_dims(x_in, 0)
         x_in = np.expand_dims(x_in, 0)
 
-        res = mynet.test_imw(x_in)
-        print(res.shape)
+        res = mynet.test_imw(x_in)[0]
+        idxs = np.argsort(res)[::-1][:topnum]
+        print(idxs)
 
         # self.x_in: xs_b,  # (?, 1, ?, 4)
         # self.y_in: ys_b,  # (?, ?, 2)
