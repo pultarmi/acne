@@ -24,7 +24,7 @@ from read_write_model import read_model, qvec2rotmat
 from read_dense import read_array
 
 path = 'IMW/sacre_coeur/Images'
-path_ks = 'IMW/sacre_coeur/Images/keypoints.h5'
+path_ks = 'IMW/sacre_coeur/keypoints.h5'
 
 all_ks = h5py.File(path_ks)
 
