@@ -38,7 +38,7 @@ def get_kps(p):
     name = os.path.splitext(os.path.basename(p))[0]
     w,h = img.width, img.height
     kps = all_ks.get(name).value
-    print(kps)
+    # print(kps)
     # kps[:,0] /= w
     # kps[:,1] /= h
     # print(kps)
