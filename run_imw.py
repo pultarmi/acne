@@ -37,7 +37,7 @@ paths = sorted(glob(os.path.join(path, '*')))
 for i,p1 in enumerate(paths):
     for p2 in paths[i+1:]:
         img = Image.open(p1)
-        name = os.path.splitext(p1)[0]
+        name = os.path.splitext(os.path.basename(p1))[0]
         w,h = img.width, img.height
         print(name)
         kps = all_ks.get(name)
@@ -48,7 +48,7 @@ for i,p1 in enumerate(paths):
         exit()
 
         img = Image.open(p2)
-        name = os.path.splitext(p2)[0]
+        name = os.path.splitext(os.path.basename(p2))[0]
         w,h = img.width, img.height
         # cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
         # print(cameras[294])
