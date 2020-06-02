@@ -22,7 +22,7 @@ from glob import glob
 from read_write_model import read_model, qvec2rotmat
 from read_dense import read_array
 
-path = 'IMW/sacre_coeur'
+path = 'IMW/sacre_coeur/Images'
 
 # https://github.com/vcg-uvic/image-matching-benchmark/blob/master/example/training_data/parse_data.ipynb?fbclid=IwAR2prxKGOvm5mJPdjzH8XHEMR3oiE0IV9KgtshTK3lCyty-g3DjhFp9wGx8
 
