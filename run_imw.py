@@ -39,9 +39,9 @@ def get_kps(p):
     w,h = img.width, img.height
     kps = all_ks.get(name).value
     print(kps)
-    kps[:,0] /= w
-    kps[:,1] /= h
-    print(kps)
+    # kps[:,0] /= w
+    # kps[:,1] /= h
+    # print(kps)
     return kps
 
 paths = sorted(glob(os.path.join(path, '*')))
@@ -58,7 +58,7 @@ for i,p1 in enumerate(paths):
         # print(x_in)
         x_in = np.expand_dims(x_in, 0)
         x_in = np.expand_dims(x_in, 0)
-        print(x_in.shape)
+        # print(x_in.shape)
 
         mynet = MyNetwork(config)
         mynet.restore()
