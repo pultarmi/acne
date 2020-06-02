@@ -34,6 +34,9 @@ paths = sorted(glob(os.path.join(path, '*')))
 for p in paths:
     img = Image.open(p)
     name = os.path.splitext(p)[0]
+    print('yuugugyguyuyu')
+    print('yuugugyguyuyu')
+    print('yuugugyguyuyu')
     print(all_ks.items())
     kps = all_ks[name]
     print(kps)
