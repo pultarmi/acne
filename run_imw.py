@@ -28,6 +28,9 @@ path_ks = 'IMW/sacre_coeur/keypoints.h5'
 
 all_ks = h5py.File(path_ks)
 
+for k, v in all_ks.items():
+    print((k, v.shape))
+
 # https://github.com/vcg-uvic/image-matching-benchmark/blob/master/example/training_data/parse_data.ipynb?fbclid=IwAR2prxKGOvm5mJPdjzH8XHEMR3oiE0IV9KgtshTK3lCyty-g3DjhFp9wGx8
 
 paths = sorted(glob(os.path.join(path, '*')))
