@@ -38,6 +38,8 @@ def get_kps(p):
     name = os.path.splitext(os.path.basename(p))[0]
     w,h = img.width, img.height
     kps = all_ks.get(name).value
+    kps[:,0] /= w
+    kps[:,1] /= h
     return kps
 
 paths = sorted(glob(os.path.join(path, '*')))
@@ -54,7 +56,6 @@ for i,p1 in enumerate(paths):
         print(x_in)
         x_in = np.expand_dims(x_in, 0)
         x_in = np.expand_dims(x_in, 0)
-        print(x_in)
         print(x_in.shape)
 
         mynet = MyNetwork(config)
