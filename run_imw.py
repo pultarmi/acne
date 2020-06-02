@@ -31,36 +31,39 @@ all_ks = h5py.File(path_ks)
 # https://github.com/vcg-uvic/image-matching-benchmark/blob/master/example/training_data/parse_data.ipynb?fbclid=IwAR2prxKGOvm5mJPdjzH8XHEMR3oiE0IV9KgtshTK3lCyty-g3DjhFp9wGx8
 
 paths = sorted(glob(os.path.join(path, '*')))
-for p in paths:
-    img = Image.open(p)
-    name = os.path.splitext(p)[0]
-    # print('yuugugyguyuyu')
-    # print('yuugugyguyuyu')
-    # print('yuugugyguyuyu')
-    # print(all_ks.items())
-    kps = all_ks.get(name)
-    print(kps)
-    # cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
-    # print(cameras[294])
-    # print(images[294].xys.shape)
-    # print(images[295].xys)
-    w,h = img.width, img.height
-    print(p)
-    print(w,h)
-    x_in = np.concatenate([img, img], axis=1)
-    x_in = np.expand_dims(x_in, 0)
-    x_in = np.expand_dims(x_in, 0)
-    print(x_in)
-    print(x_in.shape)
+for i,p1 in enumerate(paths):
+    for p2 in paths[i+1:]:
+        img = Image.open(p1)
+        name = os.path.splitext(p1)[0]
+        w,h = img.width, img.height
+        kps = all_ks.get(name)
+        kps[:,0] /= w
+        kps[:,1] /= h
+        print(kps)
+        exit()
 
-    mynet = MyNetwork(config)
-    mynet.restore()
-    mynet.test_imw(x_in)
+        img = Image.open(p2)
+        name = os.path.splitext(p2)[0]
+        w,h = img.width, img.height
+        # cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
+        # print(cameras[294])
+        # print(images[294].xys.shape)
+        # print(images[295].xys)
+        print(p)
+        print(w,h)
+        x_in = np.concatenate([img, img], axis=1)
+        x_in = np.expand_dims(x_in, 0)
+        x_in = np.expand_dims(x_in, 0)
+        print(x_in)
+        print(x_in.shape)
 
-    # self.x_in: xs_b,  # (?, 1, ?, 4)
-    # self.y_in: ys_b,  # (?, ?, 2)
-    # self.R_in: Rs_b,  # (?, 9)
-    # self.t_in: ts_b,  # (?, 3)
+        mynet = MyNetwork(config)
+        mynet.restore()
+        mynet.test_imw(x_in)
 
-    break
+        # self.x_in: xs_b,  # (?, 1, ?, 4)
+        # self.y_in: ys_b,  # (?, ?, 2)
+        # self.R_in: Rs_b,  # (?, 9)
+        # self.t_in: ts_b,  # (?, 3)
 
+        break
