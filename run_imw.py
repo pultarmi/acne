@@ -7,6 +7,7 @@ tf.disable_v2_behavior()
 from network import MyNetwork
 from PIL import Image
 import h5py
+from tqdm import tqdm
 
 from parse import parse
 from tqdm import trange
@@ -44,12 +45,11 @@ def get_kps(p):
     # print(kps)
     return kps
 
-
 mynet = MyNetwork(config)
 mynet.restore()
 
 paths = sorted(glob(os.path.join(path, '*')))
-for i,p1 in enumerate(paths):
+for i,p1 in tqdm(enumerate(paths)):
     for p2 in paths[i+1:]:
         kps1 = get_kps(p1)
         kps2 = get_kps(p2)
@@ -66,7 +66,7 @@ for i,p1 in enumerate(paths):
         x_in = np.expand_dims(x_in, 0)
 
         res = mynet.test_imw(x_in)
-        print(res)
+        print(res.shape)
 
         # self.x_in: xs_b,  # (?, 1, ?, 4)
         # self.y_in: ys_b,  # (?, ?, 2)
