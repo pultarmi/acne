@@ -51,6 +51,7 @@ for i,p1 in enumerate(paths):
         # print(images[294].xys.shape)
         # print(images[295].xys)
         x_in = np.concatenate([kps1, kps2], axis=1)
+        print(x_in)
         x_in = np.expand_dims(x_in, 0)
         x_in = np.expand_dims(x_in, 0)
         print(x_in)
