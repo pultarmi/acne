@@ -54,11 +54,12 @@ for i,p1 in enumerate(paths):
         # print(cameras[294])
         # print(images[294].xys.shape)
         # print(images[295].xys)
+        m = max(kps1.shape[0], kps2.shape[0])
+        kps1 = kps1[:m]
+        kps2 = kps2[:m]
         x_in = np.concatenate([kps1, kps2], axis=1)
-        # print(x_in)
         x_in = np.expand_dims(x_in, 0)
         x_in = np.expand_dims(x_in, 0)
-        # print(x_in.shape)
 
         mynet = MyNetwork(config)
         mynet.restore()
@@ -69,5 +70,3 @@ for i,p1 in enumerate(paths):
         # self.y_in: ys_b,  # (?, ?, 2)
         # self.R_in: Rs_b,  # (?, 9)
         # self.t_in: ts_b,  # (?, 3)
-
-        break
