@@ -4,10 +4,11 @@ import numpy as np
 # import tensorflow as tf
 print('aaaaaaaaaaaa')
 import tensorflow.compat.v1 as tf
+print('bbbbbbbbbbbbb')
 tf.disable_v2_behavior()
+print('bbbbbbbbbbbbb')
 from network import MyNetwork
 
-print('bbbbbbbbbbbbb')
 from parse import parse
 from tqdm import trange
 import pdb
