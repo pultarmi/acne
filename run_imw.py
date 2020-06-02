@@ -26,7 +26,7 @@ from read_dense import read_array
 path = 'IMW/sacre_coeur/Images'
 path_ks = 'IMW/sacre_coeur/Images/keypoints.h5'
 
-all_ks = h5py.File('keypoints.h5')
+all_ks = h5py.File(path_ks)
 
 # https://github.com/vcg-uvic/image-matching-benchmark/blob/master/example/training_data/parse_data.ipynb?fbclid=IwAR2prxKGOvm5mJPdjzH8XHEMR3oiE0IV9KgtshTK3lCyty-g3DjhFp9wGx8
 
