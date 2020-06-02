@@ -44,6 +44,10 @@ def get_kps(p):
     # print(kps)
     return kps
 
+
+mynet = MyNetwork(config)
+mynet.restore()
+
 paths = sorted(glob(os.path.join(path, '*')))
 for i,p1 in enumerate(paths):
     for p2 in paths[i+1:]:
@@ -61,8 +65,6 @@ for i,p1 in enumerate(paths):
         x_in = np.expand_dims(x_in, 0)
         x_in = np.expand_dims(x_in, 0)
 
-        mynet = MyNetwork(config)
-        mynet.restore()
         res = mynet.test_imw(x_in)
         print(res)
 
