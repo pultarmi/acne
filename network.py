@@ -131,7 +131,7 @@ class MyNetwork(object): #"""Network class """
                 XwX = tf.matmul(tf.transpose(X, (0, 2, 1)), wX)
                 print("XwX shape = {}".format(XwX.shape))
 
-                self.wX = wX ############################################3333
+                self.weights = weights ############################################3333
                 return ############################################3333
 
                 # Recover essential matrix from self-adjoing eigen
@@ -357,10 +357,10 @@ class MyNetwork(object): #"""Network class """
             self.is_training: False,
         }
         fetch = {
-            "wX": self.wX,
+            "weights": self.weights,
         }
         res = self.sess.run(fetch, feed_dict=feed_dict)
-        return res['wX']
+        return res['weights']
 
     def train(self, data):
         """Parameters
