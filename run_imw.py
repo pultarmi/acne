@@ -38,9 +38,9 @@ def get_kps(p):
     name = os.path.splitext(os.path.basename(p))[0]
     w,h = img.width, img.height
     kps = all_ks.get(name).value
-    print(kps)
-    # kps[:,0] /= w
-    # kps[:,1] /= h
+    # print(kps)
+    kps[:,0] /= w
+    kps[:,1] /= h
     # print(kps)
     return kps
 
@@ -63,6 +63,7 @@ for i,p1 in enumerate(paths):
         mynet = MyNetwork(config)
         mynet.restore()
         res = mynet.test_imw(x_in)
+        print(res)
 
         # self.x_in: xs_b,  # (?, 1, ?, 4)
         # self.y_in: ys_b,  # (?, ?, 2)
