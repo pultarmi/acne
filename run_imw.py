@@ -33,6 +33,7 @@ with h5py.File(path_ks) as all_ks:
     for p in paths:
         img = Image.open(p)
         name = os.path.splitext(p)[0]
+        print(all_ks.items())
         kps = all_ks[name]
         print(kps)
         # cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
