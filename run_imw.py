@@ -34,8 +34,10 @@ for p in paths:
     # print(cameras[294])
     # print(images[294].xys.shape)
     # print(images[295].xys)
-    print(img.height)
-    x_in = np.concatenate([img, img.xys], axis=1)
+    w,h = img.width, img.height
+    print(p)
+    print(w,h)
+    x_in = np.concatenate([img, img], axis=1)
     x_in = np.expand_dims(x_in, 0)
     x_in = np.expand_dims(x_in, 0)
     print(x_in)
