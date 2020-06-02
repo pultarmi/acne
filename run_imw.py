@@ -40,7 +40,7 @@ for i,p1 in enumerate(paths):
         name = os.path.splitext(os.path.basename(p1))[0]
         w,h = img.width, img.height
         print(name)
-        kps = all_ks.get(name)
+        kps = all_ks.get(name).value
         print(kps)
         kps[:,0] /= w
         kps[:,1] /= h
