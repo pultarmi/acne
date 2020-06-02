@@ -26,7 +26,7 @@ path = 'IMW/sacre_coeur'
 
 # https://github.com/vcg-uvic/image-matching-benchmark/blob/master/example/training_data/parse_data.ipynb?fbclid=IwAR2prxKGOvm5mJPdjzH8XHEMR3oiE0IV9KgtshTK3lCyty-g3DjhFp9wGx8
 
-paths = sort(glob(os.path.join(path, '*')))
+paths = sorted(glob(os.path.join(path, '*')))
 for p in paths:
     img = Image.open(p)
 
