@@ -62,7 +62,7 @@ for i,p1 in enumerate(paths):
 
         mynet = MyNetwork(config)
         mynet.restore()
-        mynet.test_imw(x_in)
+        res = mynet.test_imw(x_in)
 
         # self.x_in: xs_b,  # (?, 1, ?, 4)
         # self.y_in: ys_b,  # (?, ?, 2)
