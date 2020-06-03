@@ -28,8 +28,8 @@ path = 'IMW/sacre_coeur/Images'
 all_ks = h5py.File('IMW/sacre_coeur/keypoints.h5')
 matches = h5py.File('IMW/sacre_coeur/matches.h5')
 
-# for k, v in all_ks.items():
-#     print((k, v.shape))
+for k, v in matches.items():
+    print((k, v.shape))
 
 # https://github.com/vcg-uvic/image-matching-benchmark/blob/master/example/training_data/parse_data.ipynb?fbclid=IwAR2prxKGOvm5mJPdjzH8XHEMR3oiE0IV9KgtshTK3lCyty-g3DjhFp9wGx8
 
