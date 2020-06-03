@@ -59,7 +59,7 @@ for i,p1 in tqdm(enumerate(paths)):
         # print(cameras[294])
         # print(images[294].xys.shape)
         # print(images[295].xys)
-        name = os.path.splitext(os.path.basename(p1))[0] + '-' + os.path.splitext(os.path.basename(p2))[0]
+        name =  os.path.splitext(os.path.basename(p2))[0] + '-' + os.path.splitext(os.path.basename(p1))[0]
         match = matches.get(name).value
         kps1 = kps1[match[:,0]]
         kps2 = kps2[match[:,1]]
