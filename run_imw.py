@@ -25,10 +25,10 @@ from read_write_model import read_model, qvec2rotmat
 from read_dense import read_array
 
 path = 'IMW/sacre_coeur/Images'
-path_ks = 'IMW/sacre_coeur/keypoints.h5'
-matches = 'IMW/sacre_coeur/matches.h5'
+all_ks = h5py.File('IMW/sacre_coeur/keypoints.h5')
 
-all_ks = h5py.File(path_ks)
+matches = h5py.File('IMW/sacre_coeur/matches.h5')
+
 
 # for k, v in all_ks.items():
 #     print((k, v.shape))
@@ -61,6 +61,9 @@ for i,p1 in tqdm(enumerate(paths)):
         # print(cameras[294])
         # print(images[294].xys.shape)
         # print(images[295].xys)
+        name = os.path.splitext(os.path.basename(p1))[0] + '-' + os.path.splitext(os.path.basename(p2))[0]
+        match = matches.get(name)
+
         m = min(kps1.shape[0], kps2.shape[0])
         kps1 = kps1[:m]
         kps2 = kps2[:m]
@@ -70,7 +73,7 @@ for i,p1 in tqdm(enumerate(paths)):
 
         res = mynet.test_imw(x_in)[0]
         idxs = np.argsort(res)[::-1][:topnum]
-        print(idxs)
+        # print(idxs)
 
         # self.x_in: xs_b,  # (?, 1, ?, 4)
         # self.y_in: ys_b,  # (?, ?, 2)
