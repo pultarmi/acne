@@ -26,6 +26,7 @@ from read_dense import read_array
 
 path = 'IMW/sacre_coeur/Images'
 path_ks = 'IMW/sacre_coeur/keypoints.h5'
+matches = 'IMW/sacre_coeur/matches.h5'
 
 all_ks = h5py.File(path_ks)
 
