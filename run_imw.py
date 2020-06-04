@@ -84,3 +84,5 @@ for i,p2 in tqdm(enumerate(paths), total=len(paths)):
         # self.t_in: ts_b,  # (?, 3)
 
         h5out.create_dataset(name, data=kps)
+        
+h5out.close()
