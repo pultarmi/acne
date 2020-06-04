@@ -61,12 +61,12 @@ for i,p1 in tqdm(enumerate(paths)):
         # print(images[295].xys)
         name =  os.path.splitext(os.path.basename(p2))[0] + '-' + os.path.splitext(os.path.basename(p1))[0]
         match = matches.get(name).value
-        kps1 = kps1[match[:,0]]
-        kps2 = kps2[match[:,1]]
+        kps1 = kps1[match[0]]
+        kps2 = kps2[match[1]]
 
-        m = min(kps1.shape[0], kps2.shape[0])
-        kps1 = kps1[:m]
-        kps2 = kps2[:m]
+        # m = min(kps1.shape[0], kps2.shape[0])
+        # kps1 = kps1[:m]
+        # kps2 = kps2[:m]
         x_in = np.concatenate([kps1, kps2], axis=1)
         x_in = np.expand_dims(x_in, 0)
         x_in = np.expand_dims(x_in, 0)
