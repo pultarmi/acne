@@ -50,7 +50,7 @@ mynet.restore()
 topnum = 1000
 
 paths = sorted(glob(os.path.join(path, '*')))
-for i,p2 in tqdm(enumerate(paths)):
+for i,p2 in tqdm(enumerate(paths), total=len(paths)):
     for p1 in paths[i+1:]:
         kps1 = get_kps(p1)
         kps2 = get_kps(p2)
@@ -73,6 +73,7 @@ for i,p2 in tqdm(enumerate(paths)):
 
         res = mynet.test_imw(x_in)[0]
         idxs = np.argsort(res)[::-1][:topnum]
+        print(idxs)
         # print(idxs)
 
         # self.x_in: xs_b,  # (?, 1, ?, 4)
