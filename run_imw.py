@@ -24,10 +24,13 @@ from glob import glob
 from read_write_model import read_model, qvec2rotmat
 from read_dense import read_array
 
-path = 'IMW/sacre_coeur/Images'
-all_ks = h5py.File('IMW/sacre_coeur/keypoints.h5')
-matches = h5py.File('IMW/sacre_coeur/matches.h5')
-h5out = h5py.File('IMW/sacre_coeur/keypoints_new.h5', 'w')
+# sequence = 'sacre_coeur'
+sequence = 'st_peters_square'
+
+path = f'IMW/{sequence}/Images'
+all_ks = h5py.File(f'IMW/{sequence}/keypoints.h5')
+matches = h5py.File(f'IMW/{sequence}/matches.h5')
+h5out = h5py.File(f'IMW/{sequence}/keypoints_new.h5', 'w')
 
 for k, v in matches.items():
     print((k, v.shape))
@@ -84,5 +87,5 @@ for i,p2 in tqdm(enumerate(paths), total=len(paths)):
         # self.t_in: ts_b,  # (?, 3)
 
         h5out.create_dataset(name, data=kps)
-        
+
 h5out.close()
