@@ -24,8 +24,8 @@ from glob import glob
 from read_write_model import read_model, qvec2rotmat
 from read_dense import read_array
 
-sequence = 'sacre_coeur'
-# sequence = 'st_peters_square'
+# sequence = 'sacre_coeur'
+sequence = 'st_peters_square'
 
 path = f'IMW/{sequence}/Images'
 all_ks = h5py.File(f'IMW/{sequence}/keypoints.h5')
