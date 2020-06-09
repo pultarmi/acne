@@ -79,7 +79,7 @@ for i,p2 in tqdm(enumerate(paths), total=len(paths)):
 
         res = mynet.test_imw(x_in)[0]
         # print(res)
-        idxs = np.nonzero(res > 1e-7)
+        idxs = np.nonzero(res > 1e-7)[0]
         print(len(idxs))
         # idxs = np.argsort(res)[::-1][:topnum]
         kps = match[:,idxs]
