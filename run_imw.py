@@ -32,8 +32,8 @@ all_ks = h5py.File(f'IMW/{sequence}/keypoints.h5')
 matches = h5py.File(f'IMW/{sequence}/matches.h5')
 h5out = h5py.File(f'IMW/{sequence}/matches_new.h5', 'w')
 
-for k, v in matches.items():
-    print((k, v.shape))
+# for k, v in matches.items():
+#     print((k, v.shape))
 
 # https://github.com/vcg-uvic/image-matching-benchmark/blob/master/example/training_data/parse_data.ipynb?fbclid=IwAR2prxKGOvm5mJPdjzH8XHEMR3oiE0IV9KgtshTK3lCyty-g3DjhFp9wGx8
 
@@ -51,7 +51,7 @@ def get_kps(p):
 mynet = MyNetwork(config)
 mynet.restore()
 
-topnum = 1000
+# topnum = 1000
 
 # try out_weight >= 1e-5 or out_weight >=1e-7
 
@@ -80,6 +80,7 @@ for i,p2 in tqdm(enumerate(paths), total=len(paths)):
         res = mynet.test_imw(x_in)[0]
         print(res)
         idxs = np.nonzero(res > 1e-7)
+        print(idxs)
         # idxs = np.argsort(res)[::-1][:topnum]
         kps = match[:,idxs]
         # print(idxs)
