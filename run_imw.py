@@ -78,7 +78,7 @@ for i,p2 in tqdm(enumerate(paths), total=len(paths)):
         x_in = np.expand_dims(x_in, 0)
 
         res = mynet.test_imw(x_in)[0]
-        print(res)
+        # print(res)
         idxs = np.nonzero(res > 1e-7)
         print(len(idxs))
         # idxs = np.argsort(res)[::-1][:topnum]
