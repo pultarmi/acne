@@ -30,7 +30,7 @@ sequence = 'st_peters_square'
 path = f'IMW/{sequence}/Images'
 all_ks = h5py.File(f'IMW/{sequence}/keypoints.h5')
 matches = h5py.File(f'IMW/{sequence}/matches.h5')
-h5out = h5py.File(f'IMW/{sequence}/keypoints_new.h5', 'w')
+h5out = h5py.File(f'IMW/{sequence}/matches_new.h5', 'w')
 
 for k, v in matches.items():
     print((k, v.shape))
@@ -52,6 +52,8 @@ mynet = MyNetwork(config)
 mynet.restore()
 
 topnum = 1000
+
+# try out_weight >= 1e-5 or out_weight >=1e-7
 
 paths = sorted(glob(os.path.join(path, '*')))
 for i,p2 in tqdm(enumerate(paths), total=len(paths)):
@@ -76,7 +78,9 @@ for i,p2 in tqdm(enumerate(paths), total=len(paths)):
         x_in = np.expand_dims(x_in, 0)
 
         res = mynet.test_imw(x_in)[0]
-        idxs = np.argsort(res)[::-1][:topnum]
+        print(res)
+        idxs = np.nonzero(res > 1e-7)
+        # idxs = np.argsort(res)[::-1][:topnum]
         kps = match[:,idxs]
         # print(idxs)
         # print(idxs)
