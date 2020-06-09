@@ -24,13 +24,13 @@ from glob import glob
 from read_write_model import read_model, qvec2rotmat
 from read_dense import read_array
 
-# sequence = 'sacre_coeur'
-sequence = 'st_peters_square'
+sequence = 'sacre_coeur'
+# sequence = 'st_peters_square'
 
 path = f'IMW/{sequence}/Images'
 all_ks = h5py.File(f'IMW/{sequence}/keypoints.h5')
 matches = h5py.File(f'IMW/{sequence}/matches.h5')
-h5out = h5py.File(f'IMW/{sequence}/matches_new.h5', 'w')
+h5out = h5py.File(f'IMW/{sequence}/matches-acne.h5', 'w')
 
 # for k, v in matches.items():
 #     print((k, v.shape))
