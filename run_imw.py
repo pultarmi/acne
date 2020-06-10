@@ -1,5 +1,4 @@
-import os
-import sys
+import os, sys
 import numpy as np
 # import tensorflow as tf
 import tensorflow.compat.v1 as tf
@@ -9,14 +8,14 @@ from PIL import Image
 import h5py
 from tqdm import tqdm
 
-from parse import parse
-from tqdm import trange
-import pdb
-import itertools
+# from parse import parse
+# from tqdm import trange
+# import pdb
+# import itertools
 
-from tf_utils import pre_x_in, topk
-from ops import tf_skew_symmetric
-from tests import test_process
+# from tf_utils import pre_x_in, topk
+# from ops import tf_skew_symmetric
+# from tests import test_process
 from config import get_config, print_usage
 config, unparsed = get_config()
 from glob import glob
@@ -65,9 +64,6 @@ for sequence in sequences:
             kps1 = kps1[match[0]]
             kps2 = kps2[match[1]]
 
-            # m = min(kps1.shape[0], kps2.shape[0])
-            # kps1 = kps1[:m]
-            # kps2 = kps2[:m]
             x_in = np.concatenate([kps1, kps2], axis=1)
             x_in = np.expand_dims(x_in, 0)
             x_in = np.expand_dims(x_in, 0)
