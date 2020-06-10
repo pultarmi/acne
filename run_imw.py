@@ -24,6 +24,9 @@ from glob import glob
 # from read_write_model import read_model, qvec2rotmat
 # from read_dense import read_array
 
+mynet = MyNetwork(config)
+mynet.restore()
+
 sequences = ['sacre_coeur', 'st_peters_square']
 for sequence in sequences:
     path = f'IMW/{sequence}/Images'
@@ -44,9 +47,6 @@ for sequence in sequences:
         kps[:,0] /= w
         kps[:,1] /= h
         return kps
-
-    mynet = MyNetwork(config)
-    mynet.restore()
 
     # topnum = 1000
 
@@ -72,9 +72,9 @@ for sequence in sequences:
             x_in = np.expand_dims(x_in, 0)
             x_in = np.expand_dims(x_in, 0)
 
-            res = mynet.test_imw(x_in)[0]
-            # idxs = np.nonzero(res > 1e-7)[0]
-            idxs = np.nonzero(res > 1e-5)[0]
+            weights = mynet.test_imw(x_in)[0]
+            # idxs = np.nonzero(weights > 1e-7)[0]
+            idxs = np.nonzero(weights > 1e-5)[0]
             print(len(idxs))
             # idxs = np.argsort(res)[::-1][:topnum]
             kps = match[:,idxs]
