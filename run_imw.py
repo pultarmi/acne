@@ -41,9 +41,15 @@ for sequence in ['sacre_coeur', 'st_peters_square']:
         img = Image.open(p)
         name = os.path.splitext(os.path.basename(p))[0]
         w,h = img.width, img.height
+        print(img.shape)
+        print(h,w)
+        # w,h = img.shape
         kps = all_ks.get(name).value
-        kps[:,0] /= w
-        kps[:,1] /= h
+        # (image1.shape[1] - 1.0) * 0.5
+        # kps[:,0] /= w
+        # kps[:,1] /= h
+        kps[:, 0] = (kps[:,0] - ((w - 1.0) * 0.5)) / w
+        kps[:, 1] = (kps[:,1] - ((h - 1.0) * 0.5)) / h
         return kps
 
     # topnum = 1000
