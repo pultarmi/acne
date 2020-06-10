@@ -26,11 +26,13 @@ from glob import glob
 mynet = MyNetwork(config)
 mynet.restore()
 
+# h8E512lib+colo+notre-fewcams-pca128lib
+
 for sequence in ['sacre_coeur', 'st_peters_square']:
     path = f'IMW/{sequence}/Images'
     all_ks = h5py.File(f'IMW/{sequence}/keypoints.h5')
-    matches = h5py.File(f'IMW/{sequence}/matches.h5')
-    h5out = h5py.File(f'IMW/{sequence}/matches-acne.h5', 'w')
+    matches = h5py.File(f'IMW/{sequence}/matches-original.h5')
+    h5out = h5py.File(f'IMW/{sequence}/matches.h5', 'w')
 
     # for k, v in matches.items():
     #     print((k, v.shape))
