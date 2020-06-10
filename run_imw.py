@@ -78,13 +78,11 @@ for i,p2 in tqdm(enumerate(paths), total=len(paths)):
         x_in = np.expand_dims(x_in, 0)
 
         res = mynet.test_imw(x_in)[0]
-        # print(res)
-        idxs = np.nonzero(res > 1e-7)[0]
+        # idxs = np.nonzero(res > 1e-7)[0]
+        idxs = np.nonzero(res > 1e-5)[0]
         print(len(idxs))
         # idxs = np.argsort(res)[::-1][:topnum]
         kps = match[:,idxs]
-        # print(idxs)
-        # print(idxs)
 
         # self.x_in: xs_b,  # (?, 1, ?, 4)
         # self.y_in: ys_b,  # (?, ?, 2)
