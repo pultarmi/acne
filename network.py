@@ -335,9 +335,8 @@ class MyNetwork(object): #"""Network class """
         self.va_res_file_ours_ransac = os.path.join(self.res_dir_va, "valid", "va_res_ours_ransac.`txt")
 
     def restore(self):
-        # print("Restoring from {}...".format(self.save_file_best))
-        name='./logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=50000---val_intv=10000000'
-        # name='./logs/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---data_name=oan_outdoor---train_iter=400000---val_intv=10000000'
+        # name='./logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=50000---val_intv=10000000'
+        name='./logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=500000---val_intv=10000000'
         # self.saver_best.restore(self.sess, 'logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=50000---val_intv=10000000/model-474000.data-00000-of-00001')
         # self.saver_best.restore(self.sess, './logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=50000---val_intv=10000000/model-474000.index')
         self.sess.run(tf.global_variables_initializer())
