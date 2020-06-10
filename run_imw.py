@@ -26,8 +26,7 @@ from glob import glob
 mynet = MyNetwork(config)
 mynet.restore()
 
-sequences = ['sacre_coeur', 'st_peters_square']
-for sequence in sequences:
+for sequence in ['sacre_coeur', 'st_peters_square']:
     path = f'IMW/{sequence}/Images'
     all_ks = h5py.File(f'IMW/{sequence}/keypoints.h5')
     matches = h5py.File(f'IMW/{sequence}/matches.h5')
@@ -81,5 +80,4 @@ for sequence in sequences:
             # self.t_in: ts_b,  # (?, 3)
 
             h5out.create_dataset(name, data=kps)
-
     h5out.close()
