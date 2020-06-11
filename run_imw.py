@@ -1,6 +1,5 @@
 import os, sys
 import numpy as np
-# import tensorflow as tf
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 from network import MyNetwork
@@ -8,20 +7,9 @@ from PIL import Image
 import h5py
 from tqdm import tqdm
 
-# from parse import parse
-# from tqdm import trange
-# import pdb
-# import itertools
-
-# from tf_utils import pre_x_in, topk
-# from ops import tf_skew_symmetric
-# from tests import test_process
 from config import get_config, print_usage
 config, unparsed = get_config()
 from glob import glob
-
-# from read_write_model import read_model, qvec2rotmat
-# from read_dense import read_array
 
 # h8E512lib+colo+notre-fewcams-pca128lib
 
@@ -34,8 +22,8 @@ mynet.restore(name)
 for sequence in ['sacre_coeur', 'st_peters_square']:
     path = f'IMW/{sequence}/Images'
     all_ks = h5py.File(f'IMW/{sequence}/keypoints.h5')
-    matches = h5py.File(f'IMW/{sequence}/matches-original.h5')
-    h5out = h5py.File(f'IMW/{sequence}/matches.h5', 'w')
+    matches_in = h5py.File(f'IMW/{sequence}/matches-original.h5')
+    matches_out = h5py.File(f'IMW/{sequence}/matches.h5', 'w')
 
     # for k, v in matches.items():
     #     print((k, v.shape))
@@ -46,18 +34,10 @@ for sequence in ['sacre_coeur', 'st_peters_square']:
         img = Image.open(p)
         name = os.path.splitext(os.path.basename(p))[0]
         w,h = img.width, img.height
-        # print(img.shape)
-        # print(h,w)
-        # w,h = img.shape
         kps = all_ks.get(name).value
-        # (image1.shape[1] - 1.0) * 0.5
-        # kps[:,0] /= w
-        # kps[:,1] /= h
         kps[:, 0] = (kps[:,0] - ((w - 1.0) * 0.5)) / w
         kps[:, 1] = (kps[:,1] - ((h - 1.0) * 0.5)) / h
         return kps
-
-    # topnum = 1000
 
     paths = sorted(glob(os.path.join(path, '*')))
     for i,p2 in tqdm(enumerate(paths), total=len(paths)):
@@ -65,12 +45,8 @@ for sequence in ['sacre_coeur', 'st_peters_square']:
             kps1 = get_kps(p1)
             kps2 = get_kps(p2)
 
-            # cameras, images, points = read_model(path=src + '/dense/sparse', ext='.bin')
-            # print(cameras[294])
-            # print(images[294].xys.shape)
-            # print(images[295].xys)
             name =  os.path.splitext(os.path.basename(p1))[0] + '-' + os.path.splitext(os.path.basename(p2))[0]
-            match = matches.get(name).value
+            match = matches_in.get(name).value
             kps1 = kps1[match[0]]
             kps2 = kps2[match[1]]
 
@@ -90,5 +66,5 @@ for sequence in ['sacre_coeur', 'st_peters_square']:
             # self.R_in: Rs_b,  # (?, 9)
             # self.t_in: ts_b,  # (?, 3)
 
-            h5out.create_dataset(name, data=kps)
-    h5out.close()
+            matches_out.create_dataset(name, data=kps)
+    matches_out.close()
