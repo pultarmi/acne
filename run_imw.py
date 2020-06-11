@@ -25,8 +25,8 @@ from glob import glob
 
 # h8E512lib+colo+notre-fewcams-pca128lib
 
-# name='./logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=50000---val_intv=10000000'
-name='./logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=500000---val_intv=10000000'
+name='./logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=50000---val_intv=10000000'
+# name='./logs/Trained/main.py---gcn_opt=reweight_vanilla_sigmoid_softmax---bn_opt=gn---weight_opt=sigmoid_softmax---loss_multi_logit=1---use_fundamental=2---data_name=oan_outdoor---train_iter=500000---val_intv=10000000'
 
 mynet = MyNetwork(config)
 mynet.restore(name)
